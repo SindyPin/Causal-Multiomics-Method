@@ -41,11 +41,11 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 1, num_genes_to_print = 16, output_file = "results/gene_report.csv")
    ```
    Output:
-   Number of Risk genes: 406 
-   Number of Preventive genes: 402 
-   Number of TypeI Critical genes: 1334 
-   Number of TypeII Critical genes: 387 
-   Total number of genes: 6963 
+   - Number of Risk genes: 406 
+   - Number of Preventive genes: 402 
+   - Number of TypeI Critical genes: 1334 
+   - Number of TypeII Critical genes: 387 
+   - Total number of genes: 6963 
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
 |----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
@@ -72,11 +72,11 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0, num_genes_to_print = 10, output_file = "results/gene_report.csv")
    ```
    Output:
-   Number of Risk genes: 406 
-   Number of Preventive genes: 402 
-   Number of TypeI Critical genes: 1334 
-   Number of TypeII Critical genes: 387 
-   Total number of genes: 6963 
+   - Number of Risk genes: 406 
+   - Number of Preventive genes: 402 
+   - Number of TypeI Critical genes: 1334 
+   - Number of TypeII Critical genes: 387 
+   - Total number of genes: 6963 
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
 |----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
@@ -97,11 +97,11 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.5, num_genes_to_print = 10, output_file = "results/gene_report.csv")
    ```
    Output:
-   Number of Risk genes: 406 
-   Number of Preventive genes: 402 
-   Number of TypeI Critical genes: 1334 
-   Number of TypeII Critical genes: 387 
-   Total number of genes: 6963 
+   - Number of Risk genes: 406 
+   - Number of Preventive genes: 402 
+   - Number of TypeI Critical genes: 1334 
+   - Number of TypeII Critical genes: 387 
+   - Total number of genes: 6963 
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
 |----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
