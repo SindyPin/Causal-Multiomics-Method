@@ -1,4 +1,4 @@
-# Long-COVID Gene Identification Framework
+# Long-COVID Causal Gene Identification Framework
 
 ## Overview
 
