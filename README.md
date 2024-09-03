@@ -13,11 +13,60 @@ The goal of this project is to develop an advanced causal inference framework fo
 
 ## Methodology
 
-The framework combines data from multiple omics layers (e.g., genomics, transcriptomics, proteomics) and applies our new causal framework and score to identify key drivers of Long-COVID. Specifically, we:
-1. **Preprocess and normalize the data:** Handle missing values and standardize scores across datasets.
-2. **Calculate a Final Score:** For each gene, a weighted score is computed based on its contributions to risk and prevention, adjusted by a user-defined parameter (`alpha`).
-3. **Summarize and rank genes:** Genes are ranked based on their Final Scores, with additional annotations provided for their effect (Risk/Preventive) and criticality in biological networks.
-4. **Generate a detailed report:** The top candidate genes are outputted to a CSV file, with a summary of key statistics provided.
+Out framework integrates data from multiple omics layers (e.g., genomics, transcriptomics, proteomics) and calculate a score to identify key drivers of Long-COVID. 
+
+Specifically, we:
+
+**Integrated Framework for Long-COVID Causal Gene Identification**
+
+This framework combines advanced techniques (Mendelian Randomization: Mt_Robin (Multi-tissue transcriptome-wide Mendelian Randomization method ROBust to INvalid instrumental variables) [Mr.MtRobin Repository](https://github.com/kjgleason/Mr.MtRobin) [Reference](https://doi.org/10.1002/gepi.22380) and Control Theory: Controllability Analysis (CA) [Reference](https://www.pnas.org/doi/full/10.1073/pnas.1603992113)) to identify key genes associated with Long-COVID by integrating data from [GWAS](https://www.medrxiv.org/content/10.1101/2023.06.29.23292056v1), [eQTL](https://gtexportal.org/home/datasets), [PPI](https://www.pnas.org/doi/full/10.1073/pnas.1603992113), and [RNA-seq](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE215865) datasets. The focus is on identifying protein-coding genes that play crucial roles in disease mechanisms, applying rigorous selection criteria to ensure the relevance and robustness of the results.
+
+### Selection Process
+
+1. **Candidate SNP Identification**: The framework begins by identifying candidate SNPs (Single Nucleotide Polymorphisms) that serve as instrumental variables (IVs) for each gene. The selection process is applied to all genes, with the final analysis focusing exclusively on protein-coding genes.
+
+2. **Threshold Criteria**:
+   - **LD Threshold**: SNPs with a Linkage Disequilibrium (LD) correlation greater than 0.5 with another SNP in the pool are excluded.
+   - **P-value Threshold 1**: Only SNPs with a p-value less than 0.001 are considered significant.
+   - **Number of Tissues Threshold**: SNPs showing significant effects in at least one tissue are retained.
+   - **P-value Threshold 2**: Genes with a p-value and False Discovery Rate (FDR) less than or equal to 0.05 are retained, ensuring that only statistically robust genes are included in the final analysis.
+
+3. **Long-COVID Network**: The framework evaluates the roles of these genes within the protein-coding gene network, focusing on their degree (K), in-degree (Kin), and out-degree (Kout). The genes are classified into specific categories based on their indispensability and criticality in network control:
+   - **Indispensable and Critical Genes**: The analysis highlights genes that are crucial for network control, subdividing them into:
+     - **Type I Critical Genes**: Genes whose removal increases the number of driver nodes (N_D), indicating their essential role in maintaining control within the network.
+     - **Type II Critical Genes**: Genes that must always be controlled, belonging to all driver node sets, and characterized by zero in-degree (Kin=0).
+
+4. **Final Score Calculation:**  
+   For each gene, a weighted score is computed based on its contributions to risk and prevention, adjusted by a user-defined parameter (`alpha`). The final score is calculated by combining the normalized Mendelian Randomization Score (`MR_Score_norm`) and Control Theory Score (`CT_Score_norm`).
+
+   We developed the following equation to identify the risk/preventive causal and network-critical genes for Long-COVID:
+
+\[
+\mathcal{S}_{\text{Causal}} = \alpha \cdot \mathcal{S}_{\text{Risk}}(\mathbf{D}_{\text{GWAS}}, \mathbf{D}_{\text{eQTL}}) + (1-\alpha) \cdot \mathcal{S}_{\text{Network}}(\mathbf{D}_{\text{RNA-seq}}, \mathbf{D}_{\text{PPI}})
+\]
+
+**Where:**
+
+- \( \mathcal{S}_{\text{Causal}} \): The final score for identifying risk/preventive causal and network-critical genes.
+
+- \( \mathcal{S}_{\text{Risk}}(\mathbf{D}_{\text{GWAS}}, \mathbf{D}_{\text{eQTL}}) \): The score for risk and preventive causal genes, using GWAS and eQTL datasets as input.
+
+- \( \mathcal{S}_{\text{Network}}(\mathbf{D}_{\text{RNA-seq}}, \mathbf{D}_{\text{PPI}}) \): The score for network-critical genes, derived from RNA-seq data and the human PPI network.
+
+- \( \alpha \): The weighting factor that determines the contribution of risk/preventive causal genes, while \( 1 - \alpha \) represents the weighting factor for network-critical genes.
+
+5. **Summarize and rank genes:**  
+   Genes are ranked based on their Final Scores, with additional annotations indicating their effect (Risk/Preventive) and their criticality in biological networks, specifically highlighting whether they are classified as indispensable Type-I or Type-II critical genes in the context of Long-COVID.
+
+6. **Generate a detailed report:**  
+   The top candidate genes are outputted to a CSV file, with a summary of key statistics provided. The report includes:
+   - Total number of genes analyzed.
+   - Number of selected genes based on the Final Score.
+   - Number of Risk genes, Preventive genes, and Critical genes (Type-I and Type-II) for both the entire dataset and the selected subset.
+
+### Framework Outcome
+
+The integrated framework filters and ranks genes based on their contributions to Long-COVID pathogenesis, with a special focus on those that are both indispensable and critical within the protein-coding gene network. This comprehensive approach ensures that the final set of identified genes is not only statistically significant but also biologically essential for network control, providing valuable insights into potential therapeutic targets for Long-COVID.
 
 ## Files in This Repository
 
@@ -85,18 +134,18 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    - Number of TypeII Critical genes: 0 
    - Total number of genes: 6963 
 
-| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
-|----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
-|    1|TP53      |             0|     1.0000000|   1.0000000|No_Effect   |TypeI         |
-|    2|CREBBP    |             0|     0.9130435|   0.9130435|No_Effect   |TypeI         |
-|    3|EP300     |             0|     0.9030100|   0.9030100|No_Effect   |TypeI         |
-|    4|YWHAG     |             0|     0.8428094|   0.8428094|No_Effect   |TypeI         |
-|    5|SMAD3     |             0|     0.7525084|   0.7525084|No_Effect   |TypeI         |
-|    6|GRB2      |             0|     0.7023411|   0.7023411|No_Effect   |TypeI         |
-|    7|SRC       |             0|     0.6521739|   0.6521739|No_Effect   |TypeI         |
-|    8|AR        |             0|     0.5986622|   0.5986622|No_Effect   |TypeI         |
-|    9|ESR1      |             0|     0.5819398|   0.5819398|No_Effect   |TypeI         |
-|   10|RB1       |             0|     0.5652174|   0.5652174|No_Effect   |TypeI         |
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
+|    1|TP53      |             0|     1.0000000|   1.0000000|No_Significant |TypeI         |
+|    2|CREBBP    |             0|     0.9130435|   0.9130435|No_Significant |TypeI         |
+|    3|EP300     |             0|     0.9030100|   0.9030100|No_Significant |TypeI         |
+|    4|YWHAG     |             0|     0.8428094|   0.8428094|No_Significant |TypeI         |
+|    5|SMAD3     |             0|     0.7525084|   0.7525084|No_Significant |TypeI         |
+|    6|GRB2      |             0|     0.7023411|   0.7023411|No_Significant |TypeI         |
+|    7|SRC       |             0|     0.6521739|   0.6521739|No_Significant |TypeI         |
+|    8|AR        |             0|     0.5986622|   0.5986622|No_Significant |TypeI         |
+|    9|ESR1      |             0|     0.5819398|   0.5819398|No_Significant |TypeI         |
+|   10|RB1       |             0|     0.5652174|   0.5652174|No_Significant |TypeI         |
 
    - Check half risk/preventive genes and half network control genes:
    ```R
@@ -110,18 +159,18 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    - Number of TypeII Critical genes: 0 
    - Total number of genes: 6963 
 
-| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
-|----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
-|    1|TP53      |     0.0000000|     1.0000000|   0.5000000|No_Effect   |TypeI         |
-|    2|MORN4     |     1.0000000|     0.0000000|   0.5000000|Risk        |Not_Critical  |
-|    3|CREBBP    |     0.0000000|     0.9130435|   0.4565217|No_Effect   |TypeI         |
-|    4|EP300     |     0.0000000|     0.9030100|   0.4515050|No_Effect   |TypeI         |
-|    5|CDC26     |     0.8778914|     0.0000000|   0.4389457|Preventive  |Not_Critical  |
-|    6|YWHAG     |     0.0000000|     0.8428094|   0.4214047|No_Effect   |TypeI         |
-|    7|SMAD3     |     0.0000000|     0.7525084|   0.3762542|No_Effect   |TypeI         |
-|    8|GRB2      |     0.0000000|     0.7023411|   0.3511706|No_Effect   |TypeI         |
-|    9|SRC       |     0.0000000|     0.6521739|   0.3260870|No_Effect   |TypeI         |
-|   10|EIF5A     |     0.6141077|     0.0000000|   0.3070538|Risk        |Not_Critical  |
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
+|    1|TP53      |     0.0000000|     1.0000000|   0.5000000|No_Significant |TypeI         |
+|    2|MORN4     |     1.0000000|     0.0000000|   0.5000000|Risk           |Not_Critical  |
+|    3|CREBBP    |     0.0000000|     0.9130435|   0.4565217|No_Significant |TypeI         |
+|    4|EP300     |     0.0000000|     0.9030100|   0.4515050|No_Significant |TypeI         |
+|    5|CDC26     |     0.8778914|     0.0000000|   0.4389457|Preventive     |Not_Critical  |
+|    6|YWHAG     |     0.0000000|     0.8428094|   0.4214047|No_Significant |TypeI         |
+|    7|SMAD3     |     0.0000000|     0.7525084|   0.3762542|No_Significant |TypeI         |
+|    8|GRB2      |     0.0000000|     0.7023411|   0.3511706|No_Significant |TypeI         |
+|    9|SRC       |     0.0000000|     0.6521739|   0.3260870|No_Significant |TypeI         |
+|   10|EIF5A     |     0.6141077|     0.0000000|   0.3070538|Risk           |Not_Critical  |
 
 5. The function will output a ranked list of genes and a summary of the results to the specified output file.
 
@@ -134,6 +183,10 @@ Install the required libraries in R:
 ```R
 install.packages(c("dplyr", "knitr", "pander"))
 ```
+
+### Customization
+
+Applying the same framework, users can modify the input data to analyze other diseases and apply other MR and CT methods to explore different conditions or datasets.
 
 ## Contributing
 
