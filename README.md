@@ -41,19 +41,15 @@ This framework combines advanced techniques (Mendelian Randomization: Mt_Robin (
 
    We developed the following equation to identify the risk/preventive causal and network-critical genes for Long-COVID:
 
-\[
+$$
 \mathcal{S}_{\text{Causal}} = \alpha \cdot \mathcal{S}_{\text{Risk}}(\mathbf{D}_{\text{GWAS}}, \mathbf{D}_{\text{eQTL}}) + (1-\alpha) \cdot \mathcal{S}_{\text{Network}}(\mathbf{D}_{\text{RNA-seq}}, \mathbf{D}_{\text{PPI}})
-\]
+$$
 
 **Where:**
-
-- \( \mathcal{S}_{\text{Causal}} \): The final score for identifying risk/preventive causal and network-critical genes.
-
-- \( \mathcal{S}_{\text{Risk}}(\mathbf{D}_{\text{GWAS}}, \mathbf{D}_{\text{eQTL}}) \): The score for risk and preventive causal genes, using GWAS and eQTL datasets as input.
-
-- \( \mathcal{S}_{\text{Network}}(\mathbf{D}_{\text{RNA-seq}}, \mathbf{D}_{\text{PPI}}) \): The score for network-critical genes, derived from RNA-seq data and the human PPI network.
-
-- \( \alpha \): The weighting factor that determines the contribution of risk/preventive causal genes, while \( 1 - \alpha \) represents the weighting factor for network-critical genes.
+- $\mathcal{S}_{\text{Causal}}$: The final score for identifying risk/preventive causal and network-critical genes.
+- $\mathcal{S}_{\text{Risk}}(\mathbf{D}_{\text{GWAS}}, \mathbf{D}_{\text{eQTL}})$: The score for risk and preventive causal genes, using GWAS and eQTL datasets as input.
+- $\mathcal{S}_{\text{Network}}(\mathbf{D}_{\text{RNA-seq}}, \mathbf{D}_{\text{PPI}})$: The score for network-critical genes, derived from RNA-seq data and the human PPI network.
+- $\alpha$: The weighting factor that determines the contribution of risk/preventive causal genes, while $1 - \alpha$ represents the weighting factor for network-critical genes.
 
 5. **Summarize and rank genes:**  
    Genes are ranked based on their Final Scores, with additional annotations indicating their effect (Risk/Preventive) and their criticality in biological networks, specifically highlighting whether they are classified as indispensable Type-I or Type-II critical genes in the context of Long-COVID.
@@ -184,7 +180,7 @@ Install the required libraries in R:
 install.packages(c("dplyr", "knitr", "pander"))
 ```
 
-### Customization
+## Customization
 
 Applying the same framework, users can modify the input data to analyze other diseases and apply other MR and CT methods to explore different conditions or datasets.
 
