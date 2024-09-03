@@ -35,16 +35,23 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
 2. The input data is provided in the `input_data/` directory. You do not need to supply any additional data.
 
 3. Load the R script and run the `generate_report` function with the provided dataset and desired parameters:
+   General Results:
+   - Number of Risk genes: 406 
+   - Number of Preventive genes: 402 
+   - Number of TypeI Critical genes: 1334 
+   - Number of TypeII Critical genes: 387 
+   - Total number of genes: 6963
+
    - Check all risk/preventive causal genes:
    ```R
    source("generate_report_function.R")
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 1, num_genes_to_print = 16, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 406 
-   - Number of Preventive genes: 402 
-   - Number of TypeI Critical genes: 1334 
-   - Number of TypeII Critical genes: 387 
+   - Number of Risk genes: 9 
+   - Number of Preventive genes: 7 
+   - Number of TypeI Critical genes: 0 
+   - Number of TypeII Critical genes: 0
    - Total number of genes: 6963 
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
@@ -72,10 +79,10 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0, num_genes_to_print = 10, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 406 
-   - Number of Preventive genes: 402 
-   - Number of TypeI Critical genes: 1334 
-   - Number of TypeII Critical genes: 387 
+   - Number of Risk genes: 0 
+   - Number of Preventive genes: 0 
+   - Number of TypeI Critical genes: 10 
+   - Number of TypeII Critical genes: 0 
    - Total number of genes: 6963 
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
@@ -97,10 +104,10 @@ The framework combines data from multiple omics layers (e.g., genomics, transcri
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.5, num_genes_to_print = 10, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 406 
-   - Number of Preventive genes: 402 
-   - Number of TypeI Critical genes: 1334 
-   - Number of TypeII Critical genes: 387 
+   - Number of Risk genes: 2 
+   - Number of Preventive genes: 1 
+   - Number of TypeI Critical genes: 7 
+   - Number of TypeII Critical genes: 0 
    - Total number of genes: 6963 
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
