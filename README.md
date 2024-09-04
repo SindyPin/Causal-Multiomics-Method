@@ -87,11 +87,11 @@ The integrated framework filters and ranks genes based on their contributions to
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 1, num_genes_to_print = 16, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 9 
-   - Number of Preventive genes: 7 
+   - Number of Risk genes: 8 
+   - Number of Preventive genes: 6 
    - Number of TypeI Critical genes: 0 
    - Number of TypeII Critical genes: 0
-   - Total number of genes: 6963 
+   - Total number of genes: 6961
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
 |----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
@@ -108,9 +108,7 @@ The integrated framework filters and ranks genes based on their contributions to
 |   11|BOLA2     |     0.1787183|             0|   0.1787183|Preventive  |Not_Critical  |
 |   12|CDA       |     0.1774153|             0|   0.1774153|Preventive  |Not_Critical  |
 |   13|MORN3     |     0.1429947|             0|   0.1429947|Risk        |Not_Critical  |
-|   14|CCDC129   |     0.1419264|             0|   0.1419264|Preventive  |Not_Critical  |
-|   15|BTN3A1    |     0.1407982|             0|   0.1407982|Preventive  |Not_Critical  |
-|   16|FAM214A   |     0.0642437|             0|   0.0642437|Risk        |Not_Critical  |
+|   14|BTN3A1    |     0.1407982|             0|   0.1407982|Preventive  |Not_Critical  |
    
    - Check all network control genes:
    ```R
@@ -122,7 +120,7 @@ The integrated framework filters and ranks genes based on their contributions to
    - Number of Preventive genes: 0 
    - Number of TypeI Critical genes: 10 
    - Number of TypeII Critical genes: 0 
-   - Total number of genes: 6963 
+   - Total number of genes: 6961
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
 |----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
@@ -147,7 +145,7 @@ The integrated framework filters and ranks genes based on their contributions to
    - Number of Preventive genes: 1 
    - Number of TypeI Critical genes: 7 
    - Number of TypeII Critical genes: 0 
-   - Total number of genes: 6963 
+   - Total number of genes: 6961
 
 | Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
 |----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
