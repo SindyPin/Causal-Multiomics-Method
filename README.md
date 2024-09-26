@@ -66,6 +66,16 @@ The integrated framework filters and ranks genes based on their contributions to
 
 ## How to Use
 
+**Option 1: Dynamic Causal Genes Visualization for Long-COVID Network**
+
+You can dynamically explore shifts in gene rankings using our interactive tool available at [Dynamic Causal Genes Visualization in a Long-COVID Network](https://sindypin.shinyapps.io/github/). This tool allows users to adjust the parameter \(\alpha\), enabling a detailed examination of how genes transition from being network-critical (\(\alpha \to 0\)) to focusing more on disease risk or prevention (\(\alpha \to 1\)).
+
+By adjusting \(\alpha\), you can customize insights into gene roles based on their specific research objectives, whether those objectives involve network dynamics, genetic risk factors, or a combination of both.
+
+![Causal Score Equation](App.png)
+
+**Option 2: Clone the Repository to Modify Results**
+
 1. Clone this repository to your local machine:
    ```bash
    git clone https://github.com/SindyPin/Causal-Multiomics-Method
