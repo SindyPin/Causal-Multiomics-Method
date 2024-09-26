@@ -58,6 +58,26 @@ This framework combines advanced techniques (Mendelian Randomization: Mt_Robin (
 
 The integrated framework filters and ranks genes based on their contributions to Long-COVID pathogenesis, with a special focus on those that are both indispensable and critical within the protein-coding gene network. This comprehensive approach ensures that the final set of identified genes is not only statistically significant but also biologically essential for network control, providing valuable insights into potential therapeutic targets for Long-COVID.
 
+### Definitions
+
+**Indispensable Genes**:  
+These are protein-coding genes crucial for maintaining the controllability of the Long-COVID network. If removed, they increase the number of driver nodes (\(ND\)) required to control the network. Indispensable genes are further classified into two categories, Type-I and Type-II, which reflect their different roles and impact across various network states.
+
+**Type-I Genes**:  
+These genes are defined by their direct effect on the controllability of the network, as measured by their influence on the number of driver nodes (\(ND\)):
+- **Critical**: The removal of a critical Type-I gene increases \(ND\), meaning the network requires more driver nodes for control when this gene is absent.
+- **Redundant**: The removal of a redundant Type-I gene decreases \(ND\), meaning fewer driver nodes are needed to control the network when this gene is absent.
+- **Ordinary**: The removal of an ordinary Type-I gene does not change \(ND\), meaning it has no effect on the number of driver nodes required for network control.
+
+**Type-II Genes**:  
+These genes are classified based on their participation in driver node sets, which are sets of nodes that must be controlled to maintain network controllability:
+- **Critical**: A critical Type-II gene must be present in all driver node sets, meaning it always plays a role in network control.
+- **Redundant**: A redundant Type-II gene is absent from all driver node sets, meaning it is never required for network control.
+- **Ordinary**: An ordinary Type-II gene is present in some but not all driver node sets, meaning it plays a role in network control in certain contexts but not universally.
+
+**Driver Nodes (\(ND\))**:  
+Driver nodes are key nodes in the network that must be controlled to ensure the network's overall functionality. An increase in the number of driver nodes suggests a greater level of complexity or difficulty in controlling the network, while a decrease indicates a reduction in the effort required for control.
+
 ## Files in This Repository
 
 - **`generate_report_function.R`:** The primary R script containing the function to calculate Final Scores, rank genes, and generate a summary report.
