@@ -88,7 +88,7 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 
 **Option 1: Dynamic Causal Genes Visualization for Long-COVID Network**
 
-You can dynamically explore shifts in gene rankings using our interactive tool available at [Dynamic Causal Genes Visualization in a Long-COVID Network](https://sindypin.shinyapps.io/github/). This tool allows users to adjust the parameter \(\alpha\), enabling a detailed examination of how genes transition from being network-critical (\(\alpha \to 0\)) to focusing more on disease risk or prevention (\(\alpha \to 1\)).
+You can dynamically explore shifts in gene rankings using our interactive tool available at [Dynamic Causal Genes Visualization in a Long-COVID Network](https://sindypin.shinyapps.io/github/). This tool allows users to adjust the parameter `alpha`, enabling a detailed examination of how genes transition from being network-critical (`alpha = 0`) to focusing more on disease risk or prevention (`alpha = 1`).
 
 By adjusting \(\alpha\), you can customize insights into gene roles based on their specific research objectives, whether those objectives involve network dynamics, genetic risk factors, or a combination of both.
 
