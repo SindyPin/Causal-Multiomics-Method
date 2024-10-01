@@ -104,13 +104,14 @@ By adjusting \(\alpha\), you can customize insights into gene roles based on the
 2. The input data is provided in the `input_data/` directory. You do not need to supply any additional data.
 
 3. Load the R script and run the `generate_report` function with the provided dataset and desired parameters:
+
    General Results:
    - Number of Risk genes: 406 
    - Number of Preventive genes: 402 
    - Number of TypeI Critical genes: 1334 
    - Number of TypeII Critical genes: 387 
    - Total number of genes: 6963
-
+---
    - Check `alpha=1.0`:
    ```R
    source("generate_report_function.R")
@@ -139,7 +140,8 @@ By adjusting \(\alpha\), you can customize insights into gene roles based on the
 |   12 | CDA       |        0.177  |        0.000  |       0.177 | Preventive   | Not_Indispensable |
 |   13 | MORN3     |        0.143  |        0.000  |       0.143 | Risk         | Not_Indispensable |
 |   14 | BTN3A1    |        0.141  |        0.000  |       0.141 | Preventive   | Not_Indispensable |
-   
+
+---
    - Check `alpha=0.5`:
    ```R
    source("generate_report_function.R")
@@ -165,6 +167,7 @@ By adjusting \(\alpha\), you can customize insights into gene roles based on the
 |    9 | SRC   |       0.329 | Non_Significant  | Critical          | Redundant         |
 |   10 | EIF5A |       0.307 | Risk_Factor      | Not_Indispensable | Not_Indispensable |
 
+---
    - Check `alpha=0.0`:
    ```R
    source("generate_report_function.R")
