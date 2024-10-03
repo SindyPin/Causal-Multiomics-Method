@@ -118,28 +118,65 @@ By adjusting \(\alpha\), you can customize insights into gene roles based on the
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 1, num_genes_to_print = 16, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 8 
-   - Number of Preventive genes: 6 
-   - Number of TypeI Critical genes: 0 
-   - Number of TypeII Critical genes: 0
-   - Total number of protein-coding-genes: 1654
+   - Total Number of Protein-coding genes in the dataset: 6339
+   - Total Number of Selected Protein-coding genes: 16
+   - Number of Selected Risk genes: 9
+   - Number of Selected Preventive genes: 7
+   - Number of Selected TypeI Critical genes: 0
+   - Number of Selected TypeII Critical genes: 0 
 
-| Rank | gene_name | MR_Score_norm | CT_Score_norm | Final_Score | Gene_Effect  | Critical_Gene    |
-|-----:|:----------|--------------:|--------------:|------------:|:-------------|:-----------------|
-|    1 | MORN4     |        1.000  |        0.000  |       1.000 | Risk         | Not_Indispensable |
-|    2 | CDC26     |        0.878  |        0.000  |       0.878 | Preventive   | Not_Indispensable |
-|    3 | EIF5A     |        0.614  |        0.000  |       0.614 | Risk         | Not_Indispensable |
-|    4 | VWDE      |        0.453  |        0.000  |       0.453 | Risk         | Not_Indispensable |
-|    5 | GMPPB     |        0.388  |        0.000  |       0.388 | Risk         | Not_Indispensable |
-|    6 | NDUFA6    |        0.286  |        0.000  |       0.286 | Risk         | Not_Critical      |
-|    7 | BNIP1     |        0.263  |        0.000  |       0.263 | Risk         | Not_Indispensable |
-|    8 | CERS4     |        0.228  |        0.000  |       0.228 | Preventive   | Not_Indispensable |
-|    9 | ADAT1     |        0.225  |        0.000  |       0.225 | Preventive   | Not_Indispensable |
-|   10 | C19orf18  |        0.225  |        0.000  |       0.225 | Risk         | Not_Indispensable |
-|   11 | BOLA2     |        0.179  |        0.000  |       0.179 | Preventive   | Not_Indispensable |
-|   12 | CDA       |        0.177  |        0.000  |       0.177 | Preventive   | Not_Indispensable |
-|   13 | MORN3     |        0.143  |        0.000  |       0.143 | Risk         | Not_Indispensable |
-|   14 | BTN3A1    |        0.141  |        0.000  |       0.141 | Preventive   | Not_Indispensable |
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:-----------|:-------------|
+|    1|MORN4     |     1.0000000|             0|   1.0000000|Risk        |Not_Critical  |
+|    2|CDC26     |     0.8778914|             0|   0.8778914|Preventive  |Not_Critical  |
+|    3|EIF5A     |     0.6141077|             0|   0.6141077|Risk        |Not_Critical  |
+|    4|VWDE      |     0.4532133|             0|   0.4532133|Risk        |Not_Critical  |
+|    5|GMPPB     |     0.3882238|             0|   0.3882238|Risk        |Not_Critical  |
+|    6|NDUFA6    |     0.2860991|             0|   0.2860991|Risk        |Not_Critical  |
+|    7|BNIP1     |     0.2628553|             0|   0.2628553|Risk        |Not_Critical  |
+|    8|CERS4     |     0.2280826|             0|   0.2280826|Preventive  |Not_Critical  |
+|    9|ADAT1     |     0.2254065|             0|   0.2254065|Preventive  |Not_Critical  |
+|   10|C19orf18  |     0.2252227|             0|   0.2252227|Risk        |Not_Critical  |
+|   11|BOLA2     |     0.1787183|             0|   0.1787183|Preventive  |Not_Critical  |
+|   12|CDA       |     0.1774153|             0|   0.1774153|Preventive  |Not_Critical  |
+|   13|MORN3     |     0.1429947|             0|   0.1429947|Risk        |Not_Critical  |
+|   14|CCDC129   |     0.1419264|             0|   0.1419264|Preventive  |Not_Critical  |
+|   15|BTN3A1    |     0.1407982|             0|   0.1407982|Preventive  |Not_Critical  |
+|   16|FAM214A   |     0.0642437|             0|   0.0642437|Risk        |Not_Critical  |
+
+---
+
+   - Check `alpha=0.75`:
+   ```R
+   source("generate_report_function.R")
+   generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.75, num_genes_to_print = 10, output_file = "results/gene_report.csv")
+   ```
+   Output:
+   - Total Number of Protein-coding genes in the dataset: 6339
+   - Total Number of Selected Protein-coding genes: 16
+   - Number of Selected Risk genes: 7
+   - Number of Selected Preventive genes: 3
+   - Number of Selected TypeI Critical genes: 6
+   - Number of Selected TypeII Critical genes: 0 
+
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
+|    1|MORN4     |     1.0000000|     0.0000000|   0.7500000|Risk           |Not_Critical  |
+|    2|CDC26     |     0.8778914|     0.0000000|   0.6584185|Preventive     |Not_Critical  |
+|    3|EIF5A     |     0.6141077|     0.0000000|   0.4605808|Risk           |Not_Critical  |
+|    4|VWDE      |     0.4532133|     0.0000000|   0.3399100|Risk           |Not_Critical  |
+|    5|GMPPB     |     0.3882238|     0.0000000|   0.2911678|Risk           |Not_Critical  |
+|    6|TP53      |     0.0000000|     1.0000000|   0.2500000|No_Significant |TypeI         |
+|    7|CREBBP    |     0.0000000|     0.9130435|   0.2282609|No_Significant |TypeI         |
+|    8|EP300     |     0.0000000|     0.9030100|   0.2257525|No_Significant |TypeI         |
+|    9|NDUFA6    |     0.2860991|     0.0000000|   0.2145743|Risk           |Not_Critical  |
+|   10|YWHAG     |     0.0000000|     0.8428094|   0.2107023|No_Significant |TypeI         |
+|   11|BNIP1     |     0.2628553|     0.0000000|   0.1971415|Risk           |Not_Critical  |
+|   12|SMAD3     |     0.0000000|     0.7525084|   0.1881271|No_Significant |TypeI         |
+|   13|GRB2      |     0.0000000|     0.7023411|   0.1755853|No_Significant |TypeI         |
+|   14|CERS4     |     0.2280826|     0.0000000|   0.1710619|Preventive     |Not_Critical  |
+|   15|ADAT1     |     0.2254065|     0.0000000|   0.1690549|Preventive     |Not_Critical  |
+|   16|C19orf18  |     0.2252227|     0.0000000|   0.1689170|Risk           |Not_Critical  |
 
 ---
    - Check `alpha=0.5`:
@@ -148,50 +185,97 @@ By adjusting \(\alpha\), you can customize insights into gene roles based on the
    generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.5, num_genes_to_print = 10, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 2
-   - Number of Preventive genes: 1
-   - Number of TypeI Critical genes: 7 
-   - Number of TypeII Critical genes: 0 
-   - Total number of protein-coding-genes: 1654
+   - Total Number of Protein-coding genes in the dataset: 6339
+   - Total Number of Selected Protein-coding genes: 16
+   - Number of Selected Risk genes: 2
+   - Number of Selected Preventive genes: 1
+   - Number of Selected TypeI Critical genes: 13
+   - Number of Selected TypeII Critical genes: 0 
 
-| Rank | Gene  | Final_Score | Gene_Effect      | TypeI             | TypeII            |
-|-----:|:------|------------:|:-----------------|:------------------|:------------------|
-|    1 | MORN4 |       0.500 | Risk_Factor      | Not_Indispensable | Not_Indispensable |
-|    2 | TP53  |       0.500 | Non_Significant  | Critical          | Redundant         |
-|    3 | CREBBP|       0.465 | Non_Significant  | Critical          | Redundant         |
-|    4 | EP300 |       0.460 | Non_Significant  | Critical          | Redundant         |
-|    5 | CDC26 |       0.439 | Preventive_Factor| Not_Indispensable | Not_Indispensable |
-|    6 | YWHAG |       0.398 | Non_Significant  | Critical          | Redundant         |
-|    7 | SMAD3 |       0.372 | Non_Significant  | Critical          | Redundant         |
-|    8 | GRB2  |       0.358 | Non_Significant  | Critical          | Redundant         |
-|    9 | SRC   |       0.329 | Non_Significant  | Critical          | Redundant         |
-|   10 | EIF5A |       0.307 | Risk_Factor      | Not_Indispensable | Not_Indispensable |
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
+|    1|TP53      |     0.0000000|     1.0000000|   0.5000000|No_Significant |TypeI         |
+|    2|MORN4     |     1.0000000|     0.0000000|   0.5000000|Risk           |Not_Critical  |
+|    3|CREBBP    |     0.0000000|     0.9130435|   0.4565217|No_Significant |TypeI         |
+|    4|EP300     |     0.0000000|     0.9030100|   0.4515050|No_Significant |TypeI         |
+|    5|CDC26     |     0.8778914|     0.0000000|   0.4389457|Preventive     |Not_Critical  |
+|    6|YWHAG     |     0.0000000|     0.8428094|   0.4214047|No_Significant |TypeI         |
+|    7|SMAD3     |     0.0000000|     0.7525084|   0.3762542|No_Significant |TypeI         |
+|    8|GRB2      |     0.0000000|     0.7023411|   0.3511706|No_Significant |TypeI         |
+|    9|SRC       |     0.0000000|     0.6521739|   0.3260870|No_Significant |TypeI         |
+|   10|EIF5A     |     0.6141077|     0.0000000|   0.3070538|Risk           |Not_Critical  |
+|   11|AR        |     0.0000000|     0.5986622|   0.2993311|No_Significant |TypeI         |
+|   12|ESR1      |     0.0000000|     0.5819398|   0.2909699|No_Significant |TypeI         |
+|   13|RB1       |     0.0000000|     0.5652174|   0.2826087|No_Significant |TypeI         |
+|   14|CSNK2A1   |     0.0000000|     0.5518395|   0.2759197|No_Significant |TypeI         |
+|   15|SMAD2     |     0.0000000|     0.5384615|   0.2692308|No_Significant |TypeI         |
+|   16|CDKN1A    |     0.0000000|     0.5284281|   0.2642140|No_Significant |TypeI         |
 
 ---
-   - Check `alpha=0.0`:
+   - Check `alpha=0.25`:
    ```R
    source("generate_report_function.R")
-   generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.0, num_genes_to_print = 10, output_file = "results/gene_report.csv")
+   generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.25, num_genes_to_print = 10, output_file = "results/gene_report.csv")
    ```
    Output:
-   - Number of Risk genes: 0
-   - Number of Preventive genes: 0
-   - Number of TypeI Critical genes: 10
-   - Number of TypeII Critical genes: 0 
-   - Total number of protein-coding-genes: 1654
+   - Total Number of Protein-coding genes in the dataset: 6339
+   - Total Number of Selected Protein-coding genes: 16
+   - Number of Selected Risk genes: 0
+   - Number of Selected Preventive genes: 0
+   - Number of Selected TypeI Critical genes: 16
+   - Number of Selected TypeII Critical genes: 0 
 
-| Rank | Gene  | Final_Score | Gene_Effect      | TypeI    | TypeII    |
-|-----:|:------|------------:|:-----------------|:---------|:----------|
-|    1 | TP53  |       1.000 | Non_Significant  | Critical | Redundant |
-|    2 | CREBBP|       0.931 | Non_Significant  | Critical | Redundant |
-|    3 | EP300 |       0.920 | Non_Significant  | Critical | Redundant |
-|    4 | YWHAG |       0.796 | Non_Significant  | Critical | Redundant |
-|    5 | SMAD3 |       0.744 | Non_Significant  | Critical | Redundant |
-|    6 | GRB2  |       0.716 | Non_Significant  | Critical | Redundant |
-|    7 | SRC   |       0.657 | Non_Significant  | Critical | Redundant |
-|    8 | ESR1  |       0.585 | Non_Significant  | Critical | Redundant |
-|    9 | AR    |       0.581 | Non_Significant  | Critical | Redundant |
-|   10 | RB1   |       0.564 | Non_Significant  | Critical | Redundant |
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
+|    1|TP53      |             0|     1.0000000|   0.7500000|No_Significant |TypeI         |
+|    2|CREBBP    |             0|     0.9130435|   0.6847826|No_Significant |TypeI         |
+|    3|EP300     |             0|     0.9030100|   0.6772575|No_Significant |TypeI         |
+|    4|YWHAG     |             0|     0.8428094|   0.6321070|No_Significant |TypeI         |
+|    5|SMAD3     |             0|     0.7525084|   0.5643813|No_Significant |TypeI         |
+|    6|GRB2      |             0|     0.7023411|   0.5267559|No_Significant |TypeI         |
+|    7|SRC       |             0|     0.6521739|   0.4891304|No_Significant |TypeI         |
+|    8|AR        |             0|     0.5986622|   0.4489967|No_Significant |TypeI         |
+|    9|ESR1      |             0|     0.5819398|   0.4364548|No_Significant |TypeI         |
+|   10|RB1       |             0|     0.5652174|   0.4239130|No_Significant |TypeI         |
+|   11|CSNK2A1   |             0|     0.5518395|   0.4138796|No_Significant |TypeI         |
+|   12|SMAD2     |             0|     0.5384615|   0.4038462|No_Significant |TypeI         |
+|   13|CDKN1A    |             0|     0.5284281|   0.3963211|No_Significant |TypeI         |
+|   14|MAPK1     |             0|     0.5250836|   0.3938127|No_Significant |TypeI         |
+|   15|FYN       |             0|     0.5117057|   0.3837793|No_Significant |TypeI         |
+|   16|HDAC1     |             0|     0.5050167|   0.3787625|No_Significant |TypeI         |
+
+---
+   - Check `alpha=0.00`:
+   ```R
+   source("generate_report_function.R")
+   generate_report(file_path = "input_data/mt_robin_CT.csv", alpha = 0.00, num_genes_to_print = 10, output_file = "results/gene_report.csv")
+   ```
+   Output:
+   - Total Number of Protein-coding genes in the dataset: 6339
+   - Total Number of Selected Protein-coding genes: 16
+   - Number of Selected Risk genes: 0
+   - Number of Selected Preventive genes: 0
+   - Number of Selected TypeI Critical genes: 16
+   - Number of Selected TypeII Critical genes: 0 
+
+| Rank|gene_name | MR_Score_norm| CT_Score_norm| Final_Score|Gene_Effect    |Critical_Gene |
+|----:|:---------|-------------:|-------------:|-----------:|:--------------|:-------------|
+|    1|TP53      |             0|     1.0000000|   1.0000000|No_Significant |TypeI         |
+|    2|CREBBP    |             0|     0.9130435|   0.9130435|No_Significant |TypeI         |
+|    3|EP300     |             0|     0.9030100|   0.9030100|No_Significant |TypeI         |
+|    4|YWHAG     |             0|     0.8428094|   0.8428094|No_Significant |TypeI         |
+|    5|SMAD3     |             0|     0.7525084|   0.7525084|No_Significant |TypeI         |
+|    6|GRB2      |             0|     0.7023411|   0.7023411|No_Significant |TypeI         |
+|    7|SRC       |             0|     0.6521739|   0.6521739|No_Significant |TypeI         |
+|    8|AR        |             0|     0.5986622|   0.5986622|No_Significant |TypeI         |
+|    9|ESR1      |             0|     0.5819398|   0.5819398|No_Significant |TypeI         |
+|   10|RB1       |             0|     0.5652174|   0.5652174|No_Significant |TypeI         |
+|   11|CSNK2A1   |             0|     0.5518395|   0.5518395|No_Significant |TypeI         |
+|   12|SMAD2     |             0|     0.5384615|   0.5384615|No_Significant |TypeI         |
+|   13|CDKN1A    |             0|     0.5284281|   0.5284281|No_Significant |TypeI         |
+|   14|MAPK1     |             0|     0.5250836|   0.5250836|No_Significant |TypeI         |
+|   15|FYN       |             0|     0.5117057|   0.5117057|No_Significant |TypeI         |
+|   16|HDAC1     |             0|     0.5050167|   0.5050167|No_Significant |TypeI         |
 
 5. The function will output a ranked list of genes and a summary of the results to the specified output file.
 
