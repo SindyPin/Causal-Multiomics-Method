@@ -142,7 +142,7 @@ By adjusting \(\alpha\), you can customize insights into gene roles based on the
 |   13|MORN3     |     0.1429947|             0|   0.1429947|Risk        |Not_Critical  |
 |   14|CCDC129   |     0.1419264|             0|   0.1419264|Preventive  |Not_Critical  |
 |   15|BTN3A1    |     0.1407982|             0|   0.1407982|Preventive  |Not_Critical  |
-|   16|FAM214A   |     0.0642437|             0|   0.0642437|Risk        |Not_Critical  |
+|   16|ATOSA     |     0.0642437|             0|   0.0642437|Risk        |Not_Critical  |
 
 ---
 
