@@ -1,8 +1,8 @@
-# Supplementary Material 5: Enrichment Analysis of Causal Genes when `alpha = 1.00` (Network Driver Genes)
+# Enrichment Analysis of Causal Genes when `alpha = 0.00` (Network Driver Genes)
 
 ## Purpose and Application:
 
-This README explains the "Each_Network_Driver_EA_Genes" folder for each gene in different tables, which results from enrichment analysis on causal genes identified when alpha = 1.00.
+This README explains the "Alpha0_EA_Results.tsv" file for each causal gene when alpha = 0.00.
 The analysis identifies biological functions, pathways, and potential Long-COVID symptoms associated with these genes.
 
 ## Types of Enrichment Analysis Used in this Study:
@@ -12,10 +12,11 @@ The analysis identifies biological functions, pathways, and potential Long-COVID
 
 ## Dataset Overview:
 
-The dataset highlights significant causal genes when `alpha = 1.00`, focusing on gene functions and pathways.
+The dataset highlights significant causal genes when `alpha = 0.00`, focusing on gene functions and pathways.
 
 ## Column Descriptions:
 
+- **Gene**: Gene name.
 - **ID**: Unique identifier for the pathway the gene is involved in.
 - **Description**: Description of the pathway.
 - **GeneRatio**: Ratio of observed genes to the total number of genes in the pathway.
