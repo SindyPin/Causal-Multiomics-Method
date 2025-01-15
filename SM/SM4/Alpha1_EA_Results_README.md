@@ -2,7 +2,7 @@
 
 ## Purpose and Application:
 
-This README explains the "Alpha_1.00_EA_Genes.xlsx" dataset, which results from enrichment analysis on causal genes identified when alpha = 1.00.
+This README explains the "Alpha0_EA_Results.xlsx" dataset, which results from enrichment analysis on causal genes identified when alpha = 1.00.
 The analysis identifies biological functions, pathways, and potential Long-COVID symptoms associated with these genes.
 
 ## Types of Enrichment Analysis Used in this Study:
@@ -16,6 +16,7 @@ The dataset highlights significant causal genes when `alpha = 1.00`, focusing on
 
 ## Column Descriptions:
 
+- **Gene**: Gene name.
 - **Gene_Set_ID**: Unique identifier for each gene set, with pathways highlighted in different colors.
 - **Ensembl_Gene_ID**: Unique identifier for genes in the Ensembl database.
 - **Entrez_Gene_ID**: Unique identifier for genes in the NCBI Entrez database.
