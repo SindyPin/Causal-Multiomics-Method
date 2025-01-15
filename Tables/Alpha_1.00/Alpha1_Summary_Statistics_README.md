@@ -2,7 +2,7 @@
 
 ## Purpose:
 
-The "Alpha_1.00_Genes.xlsx" dataset provides results of 16 significant causal genes as risk or preventive factors for Long-COVID identified when setting `alpha=1.00` in our framework:
+The "Alpha1_Summary_Statistics.xlsx" dataset provides results of 16 significant causal genes as risk or preventive factors for Long-COVID identified when setting `alpha=1.00` in our framework:
 
 ## Column Descriptions:
 
