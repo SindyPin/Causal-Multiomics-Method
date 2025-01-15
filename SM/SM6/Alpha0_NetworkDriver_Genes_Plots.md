@@ -1,4 +1,4 @@
-# Supplementary Material 6: Network Driver Genes for Long-COVID
+# Network Driver Genes for Long-COVID
 
 We provide a detailed example of 9 identified network driver genes in the "Network_Driver_Genes_Plots"—**AR**, **CDKN1A**, **CREBBP**, **EP300**, **ESR1**, **RB1**, **SMAD3**, **SRC**, and **TP53**—showing their connections with other genes and emphasizing their significant roles in the network. These genes were identified based on their involvement in essential biological processes and pathways that contribute to the persistence of long-term COVID symptoms.
 
