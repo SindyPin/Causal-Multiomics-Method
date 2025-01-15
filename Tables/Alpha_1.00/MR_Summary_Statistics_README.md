@@ -1,4 +1,4 @@
-# Supplementary Material 2: Summary Statistics of Causal Genes when alpha = 1.00
+# Summary Statistics of Causal Genes when alpha = 1.00
 
 ## Purpose:
 
