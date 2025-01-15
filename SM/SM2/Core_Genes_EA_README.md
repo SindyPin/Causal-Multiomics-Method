@@ -2,10 +2,10 @@
 
 ## Purpose and Application:
 
-The results of the enrichment analysis provided in the following datasets offer insights into the biological significance of genes for Long-COVID identified as causal by our framework:
-- GO: GO_EA.tsv
-- KEGG: KEGG_EA.tsv
-- Reactome: Reactome_EA.tsv 
+The results of the enrichment analysis provided in the following datasets offer insights into the biological significance of the core genes for Long-COVID identified as causal by our framework:
+- GO: Core_Genes_GO_EA.tsv
+- KEGG: Core_Genes_KEGG_EA.tsv
+- Reactome: Core_Genes_Reactome_EA.tsv 
 
 ## Types of Enrichment Analysis Applied in this Study:
 
