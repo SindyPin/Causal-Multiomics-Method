@@ -1,4 +1,4 @@
-# Long-COVID Causal Gene Identification Framework
+# Integrative Multi-Omics Framework for Causal Gene Discovery in Long COVID
 
 ## Overview
 
@@ -15,7 +15,7 @@ The goal of this project is to develop an advanced causal inference framework fo
 
 Out framework integrates data from multiple omics layers (e.g., genomics, transcriptomics, proteomics) and calculate a score to identify key network drivers genes for Long-COVID. 
 
-![Workflow Causal Framework](Workflow.png)
+![Workflow Causal Framework](Figures/Workflow.png)
 
 Specifically, we:
 
@@ -43,7 +43,7 @@ This framework combines advanced techniques (Mendelian Randomization: Mt_Robin (
 
    We developed the following equation to identify the risk/preventive causal and network-critical genes for Long-COVID:
 
-![Causal Score Equation](equation.png)
+![Causal Score Equation](Figures/equation.png)
 
 5. **Summarize and rank genes:**  
    Genes are ranked based on their Final Scores, with additional annotations indicating their effect (Risk/Preventive) and their criticality in biological networks, specifically highlighting whether they are classified as indispensable Type-I or Type-II critical genes in the context of Long-COVID.
@@ -92,7 +92,7 @@ You can dynamically explore shifts in gene rankings using our interactive tool a
 
 By adjusting \(\alpha\), you can customize insights into gene roles based on their specific research objectives, whether those objectives involve network dynamics, genetic risk factors, or a combination of both.
 
-![Causal Score Equation](App.png)
+![Causal Score Equation](Figures/App.png)
 
 **Option 2: Clone the Repository to Modify Results**
 
