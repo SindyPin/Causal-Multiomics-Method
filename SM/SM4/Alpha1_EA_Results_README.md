@@ -1,4 +1,4 @@
-# Supplementary Material 4: Enrichment Analysis of Causal Genes when `alpha = 1.00`
+# Enrichment Analysis of Causal Genes when `alpha = 1.00`
 
 ## Purpose and Application:
 
