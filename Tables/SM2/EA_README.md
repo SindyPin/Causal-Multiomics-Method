@@ -1,11 +1,11 @@
-# Supplementary Material 3: Enrichment Analysis of the Core Causal Genes for Long-COVID
+# Enrichment Analysis of the Core Causal Genes for Long-COVID
 
 ## Purpose and Application:
 
 The results of the enrichment analysis provided in the following datasets offer insights into the biological significance of genes for Long-COVID identified as causal by our framework:
-- GO: go_analysis_results_core_causal_genes.tsv
-- KEGG: kegg_analysis_results_core_causal_genes.tsv
-- Reactome: reactome_analysis_results_core_causal_genes.tsv 
+- GO: GO_EA.tsv
+- KEGG: KEGG_EA.tsv
+- Reactome: Reactome_EA.tsv 
 
 ## Types of Enrichment Analysis Applied in this Study:
 
