@@ -13,7 +13,7 @@ The goal of this project is to develop an advanced causal inference framework fo
 
 ## Methodology
 
-Out framework integrates data from multiple omics layers (e.g., genomics, transcriptomics, proteomics) and calculate a score to identify key drivers of Long-COVID. 
+Out framework integrates data from multiple omics layers (e.g., genomics, transcriptomics, proteomics) and calculate a score to identify key network drivers genes for Long-COVID. 
 
 ![Workflow Causal Framework](Workflow.png)
 
@@ -25,15 +25,15 @@ This framework combines advanced techniques (Mendelian Randomization: Mt_Robin (
 
 ### Selection Process
 
-1. **Candidate SNP Identification**: The framework begins by identifying candidate SNPs (Single Nucleotide Polymorphisms) that serve as instrumental variables (IVs) for each gene. The selection process is applied to all genes, with the final analysis focusing exclusively on protein-coding genes.
+1. **Candidate SNP Identification**: The framework begins by identifying candidate Single Nucleotide Polymorphisms (SNPs) that serve as instrumental variables (IVs) for each gene. The selection process is applied to all genes, with the final analysis focusing exclusively on protein-coding genes.
 
 2. **Threshold Criteria**:
    - **LD Threshold**: SNPs with a Linkage Disequilibrium (LD) correlation greater than 0.5 with another SNP in the pool are excluded.
    - **P-value Threshold 1**: Only SNPs with a p-value less than 0.001 are considered significant.
    - **Number of Tissues Threshold**: SNPs showing significant effects in at least one tissue are retained.
-   - **P-value Threshold 2**: Genes with a p-value and False Discovery Rate (FDR) less than or equal to 0.05 are retained, ensuring that only statistically robust genes are included in the final analysis.
+   - **P-value Threshold 2**: Genes with a p-value and False Discovery Rate (FDR) less than or equal to 0.05 are retained.
 
-3. **Long-COVID Network**: The framework evaluates the roles of these genes within the protein-coding gene network, focusing on their degree (K), in-degree (Kin), and out-degree (Kout). The genes are classified into specific categories based on their indispensability and criticality in network control:
+3. **Long-COVID Network**: The framework evaluates the roles of these genes within the human protein-coding gene network, focusing on their degree (K), in-degree (Kin), and out-degree (Kout). The genes are classified into specific categories based on their indispensability and criticality in network control:
    - **Indispensable and Critical Genes**: The analysis highlights genes that are crucial for network control, subdividing them into:
      - **Type I Critical Genes**: Genes whose removal increases the number of driver nodes (N_D), indicating their essential role in maintaining control within the network.
      - **Type II Critical Genes**: Genes that must always be controlled, belonging to all driver node sets, and characterized by zero in-degree (Kin=0).
