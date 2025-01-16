@@ -75,9 +75,4 @@ This section details the clustering methodology applied to gene expression data.
 
 ---
 
-### **5. References**
-The document cites datasets and tools, including Lammi et al., GTEx, and Vinayagam et al.
-
----
-
 This document serves as a valuable resource for researchers and practitioners, providing detailed methodologies and insights into the integrative framework applied to Long COVID research. For more information, refer to the PDF.
