@@ -1,0 +1,5 @@
+clusterNum	maxK	pItem	pFeature	clusterAlg	distance	avg_silhouette_width
+2	6	0.9	1	pam	pearson	0.988003853
+3	5	0.9	1	pam	canberra	0.872275891
+4	6	0.9	0.9	pam	binary	0.976275323
+5	6	0.6	1	hc	minkowski	0.842064978
