@@ -1,58 +1,83 @@
-# Methods for Integrative Multi-Omics Framework Long COVID
+# Methods for Integrative Multi-Omics Framework for Long COVID
 
-The file **"SM_Methods_Integrative_Multi_Omics_Framework_Long_COVID.pdf"** provides supplementary materials and detailed explanations of the datasets, methods, and frameworks used in the study. Below is a summary of the content included in the document, organized by tables, figures, and sections.
-
----
-
-## Overview of the PDF Content
-
-### 1. **Datasets**
-This section describes the datasets used in the study, focusing on Genome-wide Association Studies (GWAS), RNA-seq gene expression, and Protein-Protein Interaction (PPI) networks.
-
-- **Tables:**
-  - **Table 1 (Genome-wide Association Studies):** A summary of the GWAS datasets, including the number of cases, controls, and SNPs for each dataset. It highlights why GWAS1 was chosen for the analysis.
-  - **Table 2 (GWAS Dataset Example):** Top 5 rows from one of the original GWAS datasets, showing genetic variant details (chromosome, position, allele information, and effect size).
-
-- **Figures:**
-  - **Figure 1 (GWAS Cases and Controls):** A visual representation of the distribution of cases and controls across the GWAS datasets, emphasizing the differences between "Broad" and "Strict" definitions.
-
-### 2. **Symptoms and Ancestries**
-This subsection highlights the diversity in clinical symptoms and ancestries within the GWAS1 dataset.
-
-- **Content:**
-  - A comprehensive list of symptoms commonly reported in Long COVID patients.
-  - Ancestral representation covering Admixed American, African, East Asian, European, Middle Eastern, and South Asian populations.
-
-### 3. **Expression Quantitative Trait Loci (eQTL)**
-This section provides details about the eQTL datasets sourced from the GTEx project, focusing on tissue-specific gene expression regulation.
-
-- **Table 3 (eQTL Summary):** A summary of the eQTL data across 49 tissues, including sample size, number of genes, and gene-SNP associations.
-
-### 4. **Whole Genome Sequence (WGS) Data for Linkage Disequilibrium (LD) Analysis**
-This section explains how the WGS data were used to calculate the LD matrix.
-
-- **Tables:**
-  - **Table 4 (WGS BIM File):** Top 5 rows of the WGS BIM file, showing the structure and content used for LD matrix calculation.
-  - **Table 5 (WGS FAM File):** Top 5 rows of the FAM file, which contains metadata for 836 European individuals.
-
-### 5. **RNA-sequencing Gene Expression (RNA-seq)**
-This section focuses on the RNA-seq dataset, describing its structure and how missing values were handled.
-
-- **Table 6 (RNA-seq Dataset):** Top 5 rows and columns of the RNA-seq dataset, showing Ensembl Gene IDs and gene expression values for selected samples. It explains how rows and columns with all missing values were removed, and the remaining missing values were imputed with the mean.
-
-### 6. **Protein-Protein Interaction (PPI)**
-This section describes the PPI dataset used to construct the Long COVID network.
-
-- **Table 7 (PPI Dataset):** Top 5 rows of the PPI dataset, highlighting gene names and their classification into Type-I (robust) and Type-II (vulnerable) nodes.
-
-### 7. **Framework**
-This section outlines the integrative multi-omics framework employed in the study.
-
-- **Figures:**
-  - **Figure 2 (Framework Part I):** Mendelian Randomization framework, showing the relationship between genetic variants (IVs), gene expression (eQTL), and Long COVID outcomes.
-  - **Figure 3 (Framework Part II):** Integrative multi-omics framework, combining Mendelian Randomization with RNA-seq and PPI data to identify causal and critical genes for Long COVID.
+The document **"SM_Methods_Integrative_Multi_Omics_Framework_Long_COVID.pdf"** provides comprehensive details of datasets, methodologies, and frameworks used to identify causal and critical genes for Long COVID research. This README summarizes the content, including key sections, tables, and figures.
 
 ---
 
-## Reference
-- All tables and figures are sourced from the corresponding datasets and methods detailed in the study. Refer to **Lammi et al., 2023**, **GTEx Project**, and **Vinayagam et al., 2011** for dataset-specific information.
+## Overview of the Document
+
+### **1. Datasets**
+This section explains the datasets integrated into the study and their significance in constructing the framework.
+
+- **Subsections:**
+  - **Genome-wide Association Studies (GWAS):**
+    - Description of GWAS datasets, emphasizing the selection of GWAS1 for its strict case definitions.
+    - **Table 1:** Summary of GWAS datasets with details on cases, controls, and SNPs.
+    - **Figure 1:** Visual representation of cases and controls in GWAS datasets.
+    - **Table 2:** Sample rows from GWAS datasets showing variant details.
+
+  - **Expression Quantitative Trait Loci (eQTL):**
+    - Summary of eQTL data from GTEx, covering 49 tissues.
+    - **Table 3:** Details on sample size, genes, and SNPs for each tissue.
+
+  - **Whole Genome Sequence (WGS) Data:**
+    - Description of WGS datasets for Linkage Disequilibrium (LD) analysis.
+    - **Table 4:** Sample rows from the BIM file with variant information.
+    - **Table 5:** Metadata from the FAM file for LD matrix computation.
+
+  - **RNA-seq Gene Expression Data:**
+    - Description of RNA-seq data for 567 participants, covering 58,884 unique genes.
+    - Explanation of missing value imputation methods.
+    - **Table 6:** Example of RNA-seq gene expression data.
+
+  - **Protein-Protein Interaction (PPI):**
+    - Summary of PPI networks used to identify critical genes.
+    - **Table 7:** Sample rows showing gene IDs, names, and node subtypes.
+
+---
+
+### **2. Framework**
+This section describes the integrative framework developed for causal gene discovery.
+
+- **Subsections:**
+  - **Overview:** Explanation of key framework components: instrumental variables (SNPs), exposure (gene expression), and outcome (Long COVID phenotypes).
+  - **Mendelian Randomization (MR):**
+    - Implementation using the Mt-Robin method.
+    - Steps include data pre-processing, forward selection analysis, mixed model setup, statistical validation, and output processing.
+    - Formulas for key metrics (e.g., MR score normalization).
+
+  - **Control Theory (CT):**
+    - Application of Controllability Analysis (CA) to identify critical genes.
+    - Node classification (Type I and Type II) and network metrics.
+    - Integration of MR and CT results to prioritize genes.
+
+  - **Figures:**
+    - **Figure 2:** Mendelian Randomization framework.
+    - **Figure 3:** Multi-omics framework integrating MR, RNA-seq, and PPI data.
+
+---
+
+### **3. Integration and Enrichment Analysis**
+- **Integration:** Methods for combining MR and CT scores, exploration of alpha values, and final result generation.
+- **Enrichment Analysis:** Functional annotation of identified genes using ontologies (Biological Process, Molecular Function, Cellular Component) and pathways (KEGG, Reactome, WikiPathways).
+
+---
+
+### **4. Gene Expression Clustering**
+This section details the clustering methodology applied to gene expression data.
+- **Steps:**
+  - Preprocessing, scaling, and parameter optimization.
+  - Use of hierarchical clustering (hc) and Partitioning Around Medoids (PAM).
+  - Output generation, including cluster assignments and visualization.
+- **Statistical Tests:**
+  - Chi-squared test for large samples.
+  - Fisher’s Exact Test for small samples.
+
+---
+
+### **5. References**
+The document cites datasets and tools, including Lammi et al., GTEx, and Vinayagam et al.
+
+---
+
+This document serves as a valuable resource for researchers and practitioners, providing detailed methodologies and insights into the integrative framework applied to Long COVID research. For more information, refer to the PDF.
