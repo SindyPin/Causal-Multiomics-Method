@@ -86,8 +86,6 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 
 ## Files in This Repository
 
-## Files in This Repository
-
 - **`Code/`:** Contains the main code files:
   - **`Main_Code.md`:** A markdown file describing the overall code structure and functionalities.
   - **`generate_report_function.R`:** The primary R script containing the function to calculate Final Scores, rank genes, and generate a summary report.
