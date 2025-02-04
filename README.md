@@ -116,6 +116,7 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 - **tidyverse** (version 2.0.0) [(tidyverse)](https://www.tidyverse.org/)
 - **data.table** (version 1.14.10) [(data.table)](https://cran.r-project.org/web/packages/data.table/index.html)
 - **lme4** (version 1.1-35.1) [(lme4)](https://cran.r-project.org/web/packages/lme4/index.html)
+- **ControllabilityAnalysis** (version 1.0) [(CA)](https://www.pnas.org/doi/full/10.1073/pnas.1603992113)
 - **httr** (version 1.4.7) [(httr)](https://cran.r-project.org/web/packages/httr/index.html)
 - **jsonlite** (version 1.8.8) [(jsonlite)](https://cran.r-project.org/web/packages/jsonlite/index.html)
 - **VennDiagram** (version 1.7.3) [(VennDiagram)](https://cran.r-project.org/web/packages/VennDiagram/index.html)
