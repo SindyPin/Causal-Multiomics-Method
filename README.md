@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[![ORCID](https://img.shields.io/badge/ORCID-0000-0002-6296-6412-a6ce39)](https://orcid.org/0000-0002-6296-6412)
+[![ORCID](https://img.shields.io/badge/ORCID-0000--0002--6296--6412-a6ce39)](https://orcid.org/0000-0002-6296-6412)
 
 ## Overview
 
