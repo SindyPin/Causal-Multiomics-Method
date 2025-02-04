@@ -86,9 +86,13 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 
 ## Files in This Repository
 
-- **`generate_report_function.R`:** The primary R script containing the function to calculate Final Scores, rank genes, and generate a summary report.
-- **`input_data/`:** A directory containing the input datasets required for running the analysis (e.g., normalized scores for genes across different omics layers).
-- **`results/`:** Output directory for the generated reports and ranked gene lists.
+## Files in This Repository
+
+- **`Code/`:** Contains the main code files:
+  - **`Main_Code.md`:** A markdown file describing the overall code structure and functionalities.
+  - **`generate_report_function.R`:** The primary R script containing the function to calculate Final Scores, rank genes, and generate a summary report.
+- **`Figures/`:** Directory containing visual assets such as workflow diagrams, causal score equations, and app screenshots used in the documentation.
+- **`SM/`:** Supplementary Materials folder containing 9 subfolders with additional data, scripts, and resources related to the project.
 
 ## System Requirements
 
