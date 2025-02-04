@@ -93,7 +93,7 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 ## System Requirements
 
 ### Operating Systems Tested On
-- Windows 11 Enterprise
+- Windows 11 Enterprise and WSL-Ubuntu-22.04
 
 ### Required Non-Standard Hardware
 - **GADI Supercomputer** (used for the First Part of the Project - [MR](https://colab.research.google.com/drive/1q8MZ_262cyIQcgVW5rhS8-QAdhRAFjq8?usp=sharing)):
