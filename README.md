@@ -1,5 +1,13 @@
 # Integrative Multi-Omics Framework for Causal Gene Discovery in Long COVID
 
+[![Coverage Status](https://coveralls.io/repos/github/USERNAME/REPO_NAME/badge.svg?branch=main)](https://coveralls.io/github/USERNAME/REPO_NAME?branch=main)
+
+[![Build Status](https://github.com/USERNAME/REPO_NAME/actions/workflows/main.yml/badge.svg)](https://github.com/USERNAME/REPO_NAME/actions)
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+[![ORCID](https://img.shields.io/badge/ORCID-0000-0002-6296-6412-a6ce39)](https://orcid.org/0000-0002-6296-6412)
+
 ## Overview
 
 This repository contains the code and necessary datasets for a novel bioinformatics framework that employs causality to identify genes potentially driving Long-COVID. Our approach integrates multi-omics data to find causal genes that influence the risk and prevention of Long-COVID, as well as the stability of its associated biological networks.
@@ -83,6 +91,51 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 - **`generate_report_function.R`:** The primary R script containing the function to calculate Final Scores, rank genes, and generate a summary report.
 - **`input_data/`:** A directory containing the input datasets required for running the analysis (e.g., normalized scores for genes across different omics layers).
 - **`results/`:** Output directory for the generated reports and ranked gene lists.
+
+## System Requirements
+
+### Operating Systems Tested On
+- Windows 11 Enterprise
+
+### Required Non-Standard Hardware
+- **GADI Supercomputer** (used for the First Part of the Project - [MR](https://colab.research.google.com/drive/1q8MZ_262cyIQcgVW5rhS8-QAdhRAFjq8?usp=sharing)):
+  - **NCPUs:** 48
+  - **Memory:** 500GB
+  - **Job Specifications:**
+    - **Job 1:** 48 CPUs, 391.58GB memory used
+    - **Job 2:** 36 CPUs, 77.45GB memory used
+    - **Job 3:** 36 CPUs, 9.67GB memory used
+  - **Software Stack:**
+    - R version 4.2.2 (via Docker)
+    - Libraries: `libcurl4-openssl-dev`, `libssl-dev`, `libxml2-dev`, `libicu-dev`, `liblapack-dev`, `libblas-dev`, `gfortran`, `nloptr`, `lme4`, `data.table`, `mvtnorm`.
+
+## Dependencies
+
+- **R** version 4.2.0 [(R Project)](https://www.r-project.org/)
+- **biomaRt** (version 2.58.0) [(biomaRt)](https://bioconductor.org/packages/release/bioc/html/biomaRt.html)
+- **CancerSubtypes** [(CancerSubtypes)](https://bioconductor.org/packages/release/bioc/html/CancerSubtypes.html)
+- **dplyr** (version 1.1.4) [(dplyr)](https://cran.r-project.org/web/packages/dplyr/index.html)
+- **tidyverse** (version 2.0.0) [(tidyverse)](https://www.tidyverse.org/)
+- **data.table** (version 1.14.10) [(data.table)](https://cran.r-project.org/web/packages/data.table/index.html)
+- **lme4** (version 1.1-35.1) [(lme4)](https://cran.r-project.org/web/packages/lme4/index.html)
+- **httr** (version 1.4.7) [(httr)](https://cran.r-project.org/web/packages/httr/index.html)
+- **jsonlite** (version 1.8.8) [(jsonlite)](https://cran.r-project.org/web/packages/jsonlite/index.html)
+- **VennDiagram** (version 1.7.3) [(VennDiagram)](https://cran.r-project.org/web/packages/VennDiagram/index.html)
+- **ggplot2** (version 3.4.4) [(ggplot2)](https://ggplot2.tidyverse.org/)
+- **cowplot** (version 1.1.2) [(cowplot)](https://cran.r-project.org/web/packages/cowplot/index.html)
+- **visNetwork** (version 2.1.2) [(visNetwork)](https://cran.r-project.org/web/packages/visNetwork/index.html)
+- **clusterProfiler** (version 4.10.0) [(clusterProfiler)](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html)
+- **ReactomePA** (version 1.46.0) [(ReactomePA)](https://bioconductor.org/packages/release/bioc/html/ReactomePA.html)
+- **org.Hs.eg.db** (version 3.18.0) [(org.Hs.eg.db)](https://bioconductor.org/packages/release/data/annotation/html/org.Hs.eg.db.html)
+- **Cytoscape** (version 3.10.1) [(Cytoscape)](https://cytoscape.org/)
+
+## Colab Notebooks
+
+The complete code implementation and all corresponding outputs are available in these Google Colab notebooks for your reference.
+- [MR](https://colab.research.google.com/drive/1q8MZ_262cyIQcgVW5rhS8-QAdhRAFjq8?usp=sharing)
+- [CT](https://colab.research.google.com/drive/1_-Whh9z_Egl4VQQ2sSj-4nn6A85jS4fQ?usp=sharing)
+- [EA](https://colab.research.google.com/drive/1BHoDQ6U4Qd7HDkqbB5qgoBzqX3Kil46T?usp=drive_link)
+- [Shinny_App](https://colab.research.google.com/drive/1cJRpwP4YgFkTuyQPPUmyceku5td1UsEr?usp=drive_link)
 
 ## How to Use
 
