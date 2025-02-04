@@ -24,7 +24,7 @@ jobs:
         Rscript -e 'install.packages(c("dplyr", "knitr", "pander"))'
 
     - name: Run R script
-      run: Rscript generate_report_function.R
+      run: Rscript Causal-Multiomics-Method/Code/generate_report_function.R
 
     - name: Operating System Information
       run: |
