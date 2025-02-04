@@ -113,7 +113,7 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 
 - **R** version 4.2.0 [(R Project)](https://www.r-project.org/)
 - **biomaRt** (version 2.58.0) [(biomaRt)](https://bioconductor.org/packages/release/bioc/html/biomaRt.html)
-- **CancerSubtypes** [(CancerSubtypes)](https://bioconductor.org/packages/release/bioc/html/CancerSubtypes.html)
+- **CancerSubtypes** [(CancerSubtypes)](https://github.com/taoshengxu/CancerSubtypes)
 - **dplyr** (version 1.1.4) [(dplyr)](https://cran.r-project.org/web/packages/dplyr/index.html)
 - **tidyverse** (version 2.0.0) [(tidyverse)](https://www.tidyverse.org/)
 - **data.table** (version 1.14.10) [(data.table)](https://cran.r-project.org/web/packages/data.table/index.html)
