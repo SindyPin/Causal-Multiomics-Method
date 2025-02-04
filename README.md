@@ -1,8 +1,6 @@
 # Integrative Multi-Omics Framework for Causal Gene Discovery in Long COVID
 
-[![Coverage Status](https://coveralls.io/repos/github/USERNAME/REPO_NAME/badge.svg?branch=main)](https://coveralls.io/github/USERNAME/REPO_NAME?branch=main)
-
-[![Build Status](https://github.com/USERNAME/REPO_NAME/actions/workflows/main.yml/badge.svg)](https://github.com/USERNAME/REPO_NAME/actions)
+[![Build Status](https://github.com/SindyPin/Causal-Multiomics-Method/actions/workflows/main.yml/badge.svg)](https://github.com/SindyPin/Causal-Multiomics-Method/actions)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
