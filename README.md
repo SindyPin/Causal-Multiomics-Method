@@ -1,6 +1,6 @@
 # Integrative Multi-Omics Framework for Causal Gene Discovery in Long COVID
 
-[![Build Status](https://github.com/SindyPin/Causal-Multiomics-Method/actions/workflows/main.yml/badge.svg)](https://github.com/SindyPin/Causal-Multiomics-Method/actions)
+[![Build Status](https://github.com/SindyPin/Causal-Multiomics-Method/actions/workflows/main.yml/badge.svg)](https://github.com/SindyPin/Causal-Multiomics-Method/actions/workflows/main.yml)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
