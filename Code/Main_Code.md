@@ -90,6 +90,16 @@ install.packages(c("dplyr", "knitr", "pander"))
 
 ---
 
+## Typical Install and Run Time
+
+- **Typical Install Time on a "Normal" Desktop Computer:**  
+  The installation of required R packages (`dplyr`, `knitr`, `pander`) is **very fast**, typically taking less than a minute on a standard desktop computer with a stable internet connection.
+
+- **Expected Run Time for Demo on a "Normal" Desktop Computer:**  
+  The `generate_report` function is designed for efficiency and completes **very quickly**, usually within a few seconds, depending on the dataset size. For the provided demo dataset, the run time is almost instantaneous.
+
+---
+
 ## Key Notes
 - **Customization**: Adjust the `alpha` parameter to modify the weight of `MR_Score_norm` and `CT_Score_norm` in the `Final_Score` calculation.
 - **Handling Missing Values**: The script replaces missing values in `MR_Score_norm` and `CT_Score_norm` with 0, ensuring a complete dataset for scoring.
