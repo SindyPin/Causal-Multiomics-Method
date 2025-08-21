@@ -1,0 +1,573 @@
+---
+title: "PGS Analysis"
+author: "Sindy"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r cars}
+# =========================================================
+# COVID-19 PGS → Gene Mapping (GRCh38)
+# Nearest-TSS with ties + minimal, fair tweaks (Steps 1–5)
+# *Adds ATOSA if missing; limits multi-gene assignment to true “ties”*
+# =========================================================
+
+suppressPackageStartupMessages({
+  library(data.table)
+  library(dplyr)
+})
+
+# ----------------------------
+# USER PATHS / INPUTS
+# ----------------------------
+pgs_folder <- "C:/Users/pinsy007/Downloads/PLOS_Correction/PGS/"
+
+# Use UCSC hg38 refGene (remote URL or replace with a local path)
+use_refgene  <- TRUE
+refgene_path <- "https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/refGene.txt.gz"
+gene_annot_csv <- "C:/Users/pinsy007/Downloads/PLOS_Correction/PGS/gene_annotations.csv"
+
+# Candidate genes (raw list; will be HGNC-checked below)
+candidate_genes_raw <- c(
+  "ADAT1","AR","ATOSA","BNIP1","BOLA2","BTN3A1","C19orf18","CDA",
+  "CDC26","CDKN1A","CERS4","CREBBP","CSNK2A1","EIF5A","EP300",
+  "ESR1","FYN","GMPPB","GRB2","HDAC1","ITPRID1","MAPK1",
+  "MORN3","MORN4","NDUFA6","RB1","SMAD2","SMAD3","SRC",
+  "TP53","VWDE","YWHAG"
+)
+
+# Mapping/window knobs
+promoter_padding_bp <- 5000L   # add ±5 kb around gene body (TSS unaffected)
+default_clump_kb    <- 200     # SNP distance clumping (kb)
+
+# ----------------------------
+# LOAD GENE ANNOTATION (GRCh38) and compute gene-level TSS
+# ----------------------------
+if (use_refgene) {
+  message("Loading hg38 refGene from: ", refgene_path)
+  refgene <- data.table::fread(refgene_path, header = FALSE, data.table = FALSE)
+  # UCSC refGene (hg38): name2 is gene symbol; strand-aware TSS
+  colnames(refgene)[1:16] <- c("bin","name","chrom","strand","txStart","txEnd","cdsStart","cdsEnd",
+                               "exonCount","exonStarts","exonEnds","score","name2","cdsStartStat",
+                               "cdsEndStat","exonFrames")
+  refgene$chrom <- gsub("^chr", "", refgene$chrom)
+  
+  gene_annotation <- refgene %>%
+    group_by(chrom, name2) %>%
+    summarise(
+      strand          = dplyr::first(strand),
+      start_position  = min(txStart, na.rm = TRUE),
+      end_position    = max(txEnd,   na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    mutate(TSS = ifelse(strand == "+", start_position, end_position)) %>%
+    rename(chromosome_name = chrom,
+           external_gene_name = name2)
+} else {
+  message("Loading gene annotations from CSV (expected GRCh38): ", gene_annot_csv)
+  gene_annotation <- read.csv(gene_annot_csv, stringsAsFactors = FALSE)
+  gene_annotation$chromosome_name <- gsub("^chr", "", gene_annotation$chromosome_name, ignore.case = TRUE)
+  if (!"TSS" %in% names(gene_annotation)) {
+    # fallback TSS approximation if CSV has no strand/TSS info
+    gene_annotation$TSS <- floor((gene_annotation$start_position + gene_annotation$end_position)/2)
+  }
+}
+
+# Promoter/body padding (TSS unchanged)
+gene_annotation$start_position <- pmax(0L, gene_annotation$start_position - promoter_padding_bp)
+gene_annotation$end_position   <- gene_annotation$end_position + promoter_padding_bp
+
+cat(sprintf("Annotation genes (unique): %d\n",
+            length(unique(gene_annotation$external_gene_name))))
+
+# Use this for mapping
+mapping_genes <- gene_annotation
+
+# ----------------------------
+# Minimal ATOSA patch (if missing in refGene name2)
+# hg38, chr15:52581321-52679388, strand "-" (TSS at high coordinate)
+# ----------------------------
+if (!"ATOSA" %in% mapping_genes$external_gene_name) {
+  atosa_chr   <- "15"
+  atosa_start <- 52581321L
+  atosa_end   <- 52679388L   # MANE/GENCODE-supported end (conservative)
+  atosa_strand <- "-"
+  
+  mapping_genes <- dplyr::bind_rows(
+    mapping_genes,
+    data.frame(
+      chromosome_name    = atosa_chr,
+      external_gene_name = "ATOSA",
+      strand             = atosa_strand,
+      start_position     = max(0L, atosa_start - promoter_padding_bp),
+      end_position       = atosa_end + promoter_padding_bp,
+      TSS                = atosa_end,   # minus strand → TSS at high coordinate
+      stringsAsFactors   = FALSE
+    )
+  )
+  cat("ATOSA added to mapping_genes (hg38 chr15:", atosa_start, "-", atosa_end, ", strand - ).\n")
+}
+
+# ----------------------------
+# STEP 1. HGNC alias check (uses candidate_genes_raw)
+# ----------------------------
+candidate_genes <- candidate_genes_raw
+hgnc_ok <- FALSE
+if (!requireNamespace("HGNChelper", quietly = TRUE)) {
+  cat("HGNChelper not installed; attempting to install from CRAN...\n")
+  try({
+    install.packages("HGNChelper", repos = "https://cloud.r-project.org", quiet = TRUE)
+  }, silent = TRUE)
+}
+if (requireNamespace("HGNChelper", quietly = TRUE)) {
+  fixed <- HGNChelper::checkGeneSymbols(candidate_genes_raw)
+  print(fixed)
+  if (all(c("Approved","Suggested.Symbol") %in% names(fixed))) {
+    candidate_genes <- fixed$Suggested.Symbol[fixed$Approved]
+    hgnc_ok <- TRUE
+  }
+} else {
+  cat("HGNChelper unavailable; proceeding with raw symbols.\n")
+}
+
+# Report any candidate symbols missing from annotation (after ATOSA patch)
+missing_syms <- setdiff(candidate_genes, unique(mapping_genes$external_gene_name))
+if (length(missing_syms)) {
+  cat("NOTE: Candidate symbols NOT in annotation:", paste(missing_syms, collapse = ", "), "\n")
+}
+
+# ----------------------------
+# Mapping helpers
+# ----------------------------
+
+# Distance-based clumping per chromosome (keep strongest, spaced ≥ kb)
+clump_by_distance <- function(df, kb = 250) {
+  if (!nrow(df)) return(df)
+  out <- list()
+  for (ch in unique(df$chr)) {
+    x <- df[df$chr == ch, , drop = FALSE]
+    if (!nrow(x)) next
+    x <- x[order(-x$abs_effect, x$pos), , drop = FALSE]  # strongest first
+    keep <- logical(nrow(x))
+    kept_pos <- c()
+    for (i in seq_len(nrow(x))) {
+      if (!length(kept_pos) || min(abs(x$pos[i] - kept_pos)) >= kb * 1000) {
+        keep[i] <- TRUE
+        kept_pos <- c(kept_pos, x$pos[i])
+      }
+    }
+    out[[ch]] <- x[keep, , drop = FALSE]
+  }
+  data.table::rbindlist(out, use.names = TRUE, fill = TRUE)
+}
+
+# Nearest-TSS with ties:
+# For each SNP, pick the nearest TSS; include up to (k_nearest_max-1) additional
+# TSS ONLY IF they are within 'tie_tolerance_bp' of the nearest distance,
+# and within the same ±window region. This allows 2–3 very nearby promoters
+# in crowded loci without spraying to many genes.
+find_nearest_genes_ties <- function(chr, positions,
+                                    window = 50000,            # ± window in bp
+                                    k_nearest_max = 3,         # cap total genes per SNP
+                                    tie_tolerance_bp = 5000,   # “true tie” radius vs nearest
+                                    gene_data = mapping_genes) {
+  chr <- as.character(gsub("^chr", "", chr, ignore.case = TRUE))
+  positions <- positions[!is.na(positions)]
+  if (!length(positions)) return(character(0))
+  chr_genes <- gene_data[gene_data$chromosome_name == chr, ]
+  if (!nrow(chr_genes)) return(character(0))
+  
+  tss <- chr_genes$TSS
+  out <- character(0)
+  for (pos in unique(as.numeric(positions))) {
+    d <- abs(tss - pos)
+    within <- which(d <= window)
+    if (!length(within)) next
+    
+    # nearest distance
+    mind <- min(d[within])
+    # candidates that are effectively “tied” with the nearest (within tolerance)
+    tied <- within[d[within] <= (mind + tie_tolerance_bp)]
+    # cap to k_nearest_max, ordered by distance
+    take <- tied[order(d[tied])][seq_len(min(length(tied), k_nearest_max))]
+    out <- c(out, chr_genes$external_gene_name[take])
+  }
+  unique(out)
+}
+
+# PGS reader (prefer GRCh38/hm columns)
+read_standardize_pgs <- function(file_path) {
+  raw <- data.table::fread(file_path, header = TRUE, data.table = FALSE)
+  
+  choose_cols <- function(df, chr_col, pos_col, build_name) {
+    if (all(c(chr_col, pos_col) %in% names(df))) {
+      list(chr = df[[chr_col]], pos = df[[pos_col]], build = build_name)
+    } else NULL
+  }
+  or_else <- function(x, y) if (!is.null(x)) x else y
+  
+  pick <- or_else(choose_cols(raw, "grch38_chr", "grch38_pos", "GRCh38"),
+                  or_else(choose_cols(raw, "hm_chr",     "hm_pos",     "GRCh38(hm)"),
+                          choose_cols(raw, "chr_name",   "chr_position","unknown")))
+  if (is.null(pick)) stop("No usable chr/pos columns in: ", basename(file_path))
+  
+  pgs <- raw
+  pgs$chr <- gsub("^chr", "", pick$chr, ignore.case = TRUE)
+  suppressWarnings(pgs$pos <- as.numeric(pick$pos))
+  attr(pgs, "build") <- pick$build
+  
+  if ("effect_weight" %in% names(pgs) && !("effect_size" %in% names(pgs))) {
+    pgs$effect_size <- pgs$effect_weight
+  }
+  suppressWarnings(pgs$effect_size <- as.numeric(pgs$effect_size))
+  pgs$abs_effect <- abs(dplyr::coalesce(pgs$effect_size, 0))
+  
+  keep_chr <- c(as.character(1:22), "X", "Y", "MT", "M")
+  pgs <- pgs[!is.na(pgs$pos) & pgs$chr %in% keep_chr, , drop = FALSE]
+  
+  cat(sprintf("PGS %s: build=%s, SNPs=%d, pos=[%g,%g]\n",
+              gsub("_.*","", basename(file_path)), attr(pgs,"build"),
+              nrow(pgs), min(pgs$pos, na.rm=TRUE), max(pgs$pos, na.rm=TRUE)))
+  pgs
+}
+
+# One run with given knobs
+run_once <- function(percentile = 0.975, window_kb = 50,
+                     k_policy = c("ties","nearest1"),  # "ties" or strict "nearest1"
+                     k_nearest_max = 3,                # only used when k_policy="ties"
+                     tie_tolerance_bp = 5000,
+                     clump_kb = default_clump_kb, do_clump = TRUE) {
+  
+  k_policy <- match.arg(k_policy)
+  
+  pgs_files <- list.files(pgs_folder, pattern = "\\.txt\\.gz$", full.names = TRUE)
+  pgs_files <- pgs_files[!grepl("refGene", pgs_files, ignore.case = TRUE)]
+  
+  all_pgs_genes <- list()
+  gene_source_df <- data.frame()
+  snp_summary <- data.frame()
+  
+  for (file_path in pgs_files) {
+    file_name <- basename(file_path)
+    pgs_id <- gsub("_.*", "", file_name)
+    
+    pgs <- read_standardize_pgs(file_path)
+    original_n <- nrow(pgs)
+    
+    # Dataset-specific selection
+    if (pgs_id %in% c("PGS002272", "PGS002273")) {
+      if (do_clump && "abs_effect" %in% names(pgs)) pgs <- clump_by_distance(pgs, kb = clump_kb)
+    } else if (pgs_id == "PGS004938") {
+      thr <- stats::quantile(pgs$abs_effect, probs = percentile, na.rm = TRUE, names = FALSE)
+      pgs <- pgs %>% dplyr::filter(abs_effect >= thr)
+      if (do_clump) pgs <- clump_by_distance(pgs, kb = clump_kb)
+    } else {
+      if (do_clump && "abs_effect" %in% names(pgs)) pgs <- clump_by_distance(pgs, kb = clump_kb)
+    }
+    
+    # SNPs -> nearest-TSS (with ties option) by chromosome
+    file_genes <- c()
+    if (nrow(pgs)) {
+      for (ch in unique(pgs$chr)) {
+        chr_snps <- pgs[pgs$chr == ch, , drop = FALSE]
+        if (!nrow(chr_snps)) next
+        
+        if (k_policy == "ties") {
+          genes_chr <- find_nearest_genes_ties(
+            ch, chr_snps$pos,
+            window = window_kb * 1000,
+            k_nearest_max = k_nearest_max,
+            tie_tolerance_bp = tie_tolerance_bp,
+            gene_data = mapping_genes
+          )
+        } else {
+          # strict nearest-1 (equivalent to ties with k=1)
+          genes_chr <- find_nearest_genes_ties(
+            ch, chr_snps$pos,
+            window = window_kb * 1000,
+            k_nearest_max = 1,
+            tie_tolerance_bp = 0,
+            gene_data = mapping_genes
+          )
+        }
+        if (length(genes_chr)) file_genes <- c(file_genes, genes_chr)
+      }
+    }
+    unique_file_genes <- sort(unique(file_genes))
+    all_pgs_genes[[pgs_id]] <- unique_file_genes
+    
+    if (length(unique_file_genes) > 0) {
+      gene_source_df <- rbind(
+        gene_source_df,
+        data.frame(gene = unique_file_genes, pgs_id = pgs_id, stringsAsFactors = FALSE)
+      )
+    }
+    
+    snp_summary <- rbind(
+      snp_summary,
+      data.frame(
+        pgs_id = pgs_id,
+        original_snps = original_n,
+        used_snps = nrow(pgs),
+        n_genes = length(unique_file_genes),
+        avg_genes_per_snp = ifelse(nrow(pgs) > 0, round(length(unique_file_genes) / nrow(pgs), 3), NA_real_),
+        stringsAsFactors = FALSE
+      )
+    )
+  }
+  
+  # Metrics
+  union_genes <- sort(unique(unlist(all_pgs_genes)))
+  universe_genes <- unique(mapping_genes$external_gene_name)
+  
+  overlap <- intersect(union_genes, candidate_genes)
+  precision <- ifelse(length(union_genes) == 0, 0, length(overlap) / length(union_genes))
+  recall <- length(overlap) / length(candidate_genes)
+  f1 <- ifelse(precision + recall == 0, 0, 2 * precision * recall / (precision + recall))
+  
+  K <- length(intersect(candidate_genes, universe_genes))
+  n_draw <- length(union_genes)
+  k_obs <- length(overlap)
+  enrich_p <- if (n_draw == 0) 1 else phyper(q = k_obs - 1, m = K, n = length(universe_genes) - K,
+                                             k = n_draw, lower.tail = FALSE)
+  
+  frac_ge2 <- 0; mean_sources <- 0
+  if (nrow(gene_source_df) > 0 && length(overlap) > 0) {
+    support <- gene_source_df %>% group_by(gene) %>%
+      summarise(n_sources = n_distinct(pgs_id), .groups = "drop")
+    overlap_support <- dplyr::filter(support, gene %in% overlap)
+    if (nrow(overlap_support)) {
+      frac_ge2 <- mean(overlap_support$n_sources >= 2)
+      mean_sources <- mean(overlap_support$n_sources)
+    }
+  }
+  
+  spread <- if (nrow(snp_summary)) with(snp_summary, max(n_genes, na.rm = TRUE) - min(n_genes, na.rm = TRUE)) else 0
+  
+  list(
+    percentile = percentile,
+    window_kb = window_kb,
+    k_policy = k_policy,
+    k_nearest_max = k_nearest_max,
+    tie_tolerance_bp = tie_tolerance_bp,
+    clump_kb = clump_kb,
+    f1 = f1, precision = precision, recall = recall,
+    enrich_p = enrich_p, frac_ge2 = frac_ge2, mean_sources = mean_sources,
+    spread = spread,
+    snp_summary = snp_summary,
+    gene_source_df = gene_source_df,
+    union_genes = union_genes,
+    overlap = overlap
+  )
+}
+
+# ----------------------------
+# STEP 2. Primary + sensitivity runs (FAIR settings)
+# ----------------------------
+output_dir <- file.path(pgs_folder, "results_nearestTSS_fair")
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+
+# FAIR primary: LDpred 97.5th percentile, ±50 kb, ties up to 3 within 5 kb
+primary <- list(percentile = 0.975, window_kb = 50,
+                k_policy = "ties", k_nearest_max = 3, tie_tolerance_bp = 5000,
+                clump_kb = 200)
+
+# Sensitivities (still “fair”):
+#  - same, but allow only 2 ties
+#  - wider window (±100 kb) with same tie rule
+#  - strict nearest-1 baseline
+sens_A  <- list(percentile = 0.975, window_kb = 50,
+                k_policy = "ties", k_nearest_max = 2, tie_tolerance_bp = 5000,
+                clump_kb = 200)
+sens_B1 <- list(percentile = 0.975, window_kb = 100,
+                k_policy = "ties", k_nearest_max = 3, tie_tolerance_bp = 5000,
+                clump_kb = 200)
+sens_B2 <- list(percentile = 0.975, window_kb = 50,
+                k_policy = "nearest1", k_nearest_max = 1, tie_tolerance_bp = 0,
+                clump_kb = 200)
+
+runs <- list(
+  primary  = do.call(run_once, primary),
+  sens_A   = do.call(run_once, sens_A),
+  sens_B1  = do.call(run_once, sens_B1),
+  sens_B2  = do.call(run_once, sens_B2)
+)
+
+summarise_run <- function(nm, res) {
+  data.frame(
+    label = nm,
+    percentile = res$percentile,
+    window_kb  = res$window_kb,
+    k_policy   = res$k_policy,
+    k_nearest_max = res$k_nearest_max,
+    tie_tol_bp    = res$tie_tolerance_bp,
+    clump_kb   = res$clump_kb,
+    union_genes = length(res$union_genes),
+    overlap     = length(res$overlap),
+    precision   = signif(res$precision, 4),
+    recall      = signif(res$recall, 4),
+    f1          = signif(res$f1, 4),
+    enrich_p    = signif(res$enrich_p, 4),
+    frac_ge2    = signif(res$frac_ge2, 4),
+    spread      = res$spread,
+    stringsAsFactors = FALSE
+  )
+}
+summary_table <- do.call(rbind, Map(summarise_run, names(runs), runs))
+write.csv(summary_table, file.path(output_dir, "step2_primary_and_sensitivity_fair.csv"), row.names = FALSE)
+print(summary_table)
+
+# Save overlap tables per run
+for (nm in names(runs)) {
+  res <- runs[[nm]]
+  if (length(res$overlap)) {
+    gs <- res$gene_source_df %>%
+      group_by(gene) %>%
+      summarise(n_sources = n_distinct(pgs_id),
+                pgs_ids   = paste(sort(unique(pgs_id)), collapse = ", "),
+                .groups = "drop") %>%
+      filter(gene %in% res$overlap) %>%
+      arrange(desc(n_sources), gene)
+    write.csv(gs, file.path(output_dir, paste0("step2_overlap_details_", nm, ".csv")), row.names = FALSE)
+  }
+}
+
+# ----------------------------
+# STEP 3. Distance diagnostic (min distance of each LC gene to ANY selected SNP)
+# Uses the FAIR primary selection knobs for SNP selection
+# ----------------------------
+get_selected_snps <- function(percentile, clump_kb) {
+  pgs_files <- list.files(pgs_folder, pattern = "\\.txt\\.gz$", full.names = TRUE)
+  pgs_files <- pgs_files[!grepl("refGene", pgs_files, ignore.case = TRUE)]
+  all_snps <- data.frame()
+  for (file_path in pgs_files) {
+    p <- read_standardize_pgs(file_path)
+    pgs_id <- gsub("_.*", "", basename(file_path))
+    if (pgs_id == "PGS004938") {
+      thr <- stats::quantile(p$abs_effect, probs = percentile, na.rm = TRUE, names = FALSE)
+      p <- dplyr::filter(p, abs_effect >= thr)
+    }
+    p <- clump_by_distance(p, kb = clump_kb)
+    all_snps <- rbind(all_snps, p[, c("chr","pos")])
+  }
+  all_snps
+}
+
+diagnose_candidate_dist <- function(percentile = primary$percentile,
+                                    clump_kb = primary$clump_kb) {
+  all_snps <- get_selected_snps(percentile, clump_kb)
+  if (!nrow(all_snps)) return(data.frame())
+  
+  snp_split <- split(all_snps$pos, all_snps$chr)
+  out <- lapply(candidate_genes, function(g) {
+    gdat <- mapping_genes[mapping_genes$external_gene_name == g, , drop = FALSE]
+    if (!nrow(gdat) || !"TSS" %in% names(gdat)) return(data.frame(gene=g, min_bp_to_selected_snp=NA_real_))
+    gdat <- gdat %>%
+      group_by(external_gene_name, chromosome_name) %>%
+      summarise(TSS = dplyr::first(TSS), .groups="drop")
+    mind <- Inf
+    for (i in seq_len(nrow(gdat))) {
+      ch <- as.character(gdat$chromosome_name[i])
+      tss <- as.numeric(gdat$TSS[i])
+      s <- snp_split[[ch]]
+      if (length(s)) mind <- min(mind, min(abs(s - tss)))
+    }
+    data.frame(gene = g, min_bp_to_selected_snp = ifelse(is.infinite(mind), NA_real_, mind))
+  })
+  ddf <- do.call(rbind, out)
+  ddf$within_50kb  <- !is.na(ddf$min_bp_to_selected_snp) & ddf$min_bp_to_selected_snp <= 50000
+  ddf$within_100kb <- !is.na(ddf$min_bp_to_selected_snp) & ddf$min_bp_to_selected_snp <= 100000
+  ddf[order(ddf$min_bp_to_selected_snp), ]
+}
+
+diag_primary <- diagnose_candidate_dist(primary$percentile, primary$clump_kb)
+write.csv(diag_primary, file.path(output_dir, "step3_distance_diagnostic_primary.csv"), row.names = FALSE)
+print(head(diag_primary, 10))
+cat(sprintf("Distance diagnostic: within 50kb = %d/%d; within 100kb = %d/%d\n",
+            sum(diag_primary$within_50kb, na.rm=TRUE), nrow(diag_primary),
+            sum(diag_primary$within_100kb, na.rm=TRUE), nrow(diag_primary)))
+
+# ----------------------------
+# STEP 4. Smaller clump sensitivity for LDpred (100 kb vs 200 kb)
+# ----------------------------
+primary_200 <- runs$primary
+primary_100 <- run_once(percentile = primary$percentile, window_kb = primary$window_kb,
+                        k_policy = primary$k_policy, k_nearest_max = primary$k_nearest_max,
+                        tie_tolerance_bp = primary$tie_tolerance_bp,
+                        clump_kb = 100, do_clump = TRUE)
+
+cmp <- rbind(
+  data.frame(label="primary_clump200kb", percentile=primary_200$percentile, window_kb=primary_200$window_kb,
+             k_policy=primary_200$k_policy, k_nearest_max=primary_200$k_nearest_max, tie_tol_bp=primary_200$tie_tolerance_bp,
+             clump_kb=primary_200$clump_kb, union_genes=length(primary_200$union_genes),
+             overlap=length(primary_200$overlap), precision=primary_200$precision, recall=primary_200$recall,
+             f1=primary_200$f1, enrich_p=primary_200$enrich_p, stringsAsFactors=FALSE),
+  data.frame(label="primary_clump100kb", percentile=primary_100$percentile, window_kb=primary_100$window_kb,
+             k_policy=primary_100$k_policy, k_nearest_max=primary_100$k_nearest_max, tie_tol_bp=primary_100$tie_tolerance_bp,
+             clump_kb=100, union_genes=length(primary_100$union_genes),
+             overlap=length(primary_100$overlap), precision=primary_100$precision, recall=primary_100$recall,
+             f1=primary_100$f1, enrich_p=primary_100$enrich_p, stringsAsFactors=FALSE)
+)
+write.csv(cmp, file.path(output_dir, "step4_clump_sensitivity_fair.csv"), row.names = FALSE)
+print(cmp)
+
+# ----------------------------
+# STEP 5. (Optional) Variant-to-Gene (V2G/eQTL) mapping layer
+# ----------------------------
+use_v2g <- FALSE
+v2g_path <- file.path(pgs_folder, "optional_v2g_links.csv")  # replace if you have one
+
+if (use_v2g && file.exists(v2g_path)) {
+  all_snps <- get_selected_snps(primary$percentile, primary$clump_kb)
+  v2g <- data.table::fread(v2g_path, data.table = FALSE)
+  nms <- tolower(names(v2g))
+  chr_col  <- names(v2g)[which(nms == "chr")[1]]
+  pos_col  <- names(v2g)[which(nms == "pos")[1]]
+  gene_col <- names(v2g)[which(nms == "gene")[1]]
+  score_col <- if (any(nms == "score")) names(v2g)[which(nms == "score")[1]] else NULL
+  if (any(is.na(c(chr_col, pos_col, gene_col)))) {
+    warning("V2G file missing required columns (chr,pos,gene); skipping V2G step.")
+  } else {
+    v2g$chr <- gsub("^chr", "", v2g[[chr_col]], ignore.case = TRUE)
+    suppressWarnings(v2g$pos <- as.numeric(v2g[[pos_col]]))
+    v2g$gene <- v2g[[gene_col]]
+    
+    all_snps$chr <- gsub("^chr", "", all_snps$chr, ignore.case = TRUE)
+    v2g_hits <- dplyr::inner_join(all_snps, v2g[, c("chr","pos","gene", score_col)], by = c("chr","pos")) %>%
+      distinct(gene, .keep_all = TRUE)
+    
+    v2g_genes <- unique(v2g_hits$gene)
+    v2g_overlap <- intersect(v2g_genes, candidate_genes)
+    v2g_universe <- unique(mapping_genes$external_gene_name)
+    K <- length(intersect(candidate_genes, v2g_universe))
+    n_draw <- length(v2g_genes)
+    k_obs <- length(v2g_overlap)
+    v2g_p <- if (n_draw == 0) 1 else phyper(q = k_obs - 1, m = K, n = length(v2g_universe) - K,
+                                            k = n_draw, lower.tail = FALSE)
+    
+    v2g_summary <- data.frame(
+      layer = "V2G/eQTL",
+      genes_mapped = n_draw,
+      overlap_with_LC = k_obs,
+      enrich_p = signif(v2g_p, 4),
+      stringsAsFactors = FALSE
+    )
+    write.csv(v2g_summary, file.path(output_dir, "step5_v2g_summary.csv"), row.names = FALSE)
+    if (length(v2g_overlap)) {
+      write.csv(data.frame(gene=sort(v2g_overlap)),
+                file.path(output_dir, "step5_v2g_overlap_genes.csv"), row.names = FALSE)
+    }
+    print(v2g_summary)
+  }
+} else {
+  cat("Step 5 (V2G/eQTL) skipped. Set use_v2g=TRUE and provide v2g_path if you want this layer.\n")
+}
+
+cat("\n--- Steps 1–5 complete (FAIR ties policy). Outputs at: ", normalizePath(output_dir), "\n")
+```
