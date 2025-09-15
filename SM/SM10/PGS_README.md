@@ -1,4 +1,4 @@
-# Supplementary Material: Polygenic Risk Score Integration Analysis
+# Polygenic Risk Score Integration Analysis
 
 This repository contains supplementary data tables for the Polygenic Risk Score (PGS) integration analysis conducted as part of our Long COVID causal gene discovery study.
 
