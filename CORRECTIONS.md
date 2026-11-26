@@ -34,15 +34,16 @@ After publication we audited the code and the stored outputs against the article
 | Measure | Value |
 |---|---:|
 | Spearman correlation of the number of connections (K) | 0.48 |
-| Spearman correlation of the control theory score | 0.16 |
-| Top 16 genes shared by the two networks | 4 of 16 |
-| Critical genes shared (Jaccard index) | 0.14 |
+| Spearman correlation of the control theory score, all 3,027 shared genes | 0.16 |
+| Spearman correlation of the control theory score, the 423 genes with a score above zero in both networks | 0.70 |
+| Top 16 genes shared by the two networks | 4 of 16 (SRC, TP53, MAPK1, CSNK2A1) |
+| Type I critical genes shared | 256 (Jaccard index 0.16) |
 
-No stored output gives 0.61. The agreement between the two networks is weak to moderate, and the statement that the comparison validates the robustness of the network results is not supported. The description in [`SM/SM12/PPIs.md`](SM/SM12/PPIs.md) has the same limitation.
+No stored output gives 0.61. Most genes have a score of zero in one of the two networks, so the agreement across all shared genes is weak; among the genes that are critical in both networks the scores agree well. The statement that the comparison validates the robustness of the network results is therefore not supported as written. The description in [`SM/SM12/PPIs.md`](SM/SM12/PPIs.md) has the same limitation. The values above are in [`SM/SM12/Network_Agreement.tsv`](SM/SM12/Network_Agreement.tsv).
 
 ## 4. Symptom differences between the clusters, and Table 7
 
-**In the article.** Symptoms were compared between the three gene expression clusters, and most symptoms are reported as significantly different. The clusters are described as distinct symptom based subtypes.
+**In the article.** Symptoms were compared between the three gene expression clusters, and most symptoms are reported as significantly different (18 of 22 in the stored output). The clusters are described as distinct symptom based subtypes.
 
 **What the files show.** The tests were run on the rows of the clinical table, which has several rows per patient, and not on the 154 patients. Each patient was therefore counted several times, which made the p values far too small. When each patient is counted once (clusters of 65, 53 and 36 patients), one of the 22 symptoms differs between the clusters after correction for multiple testing:
 
@@ -51,15 +52,15 @@ No stored output gives 0.61. The agreement between the two networks is weak to m
 | Nausea, diarrhoea, vomiting | 9 | 4 | 14 | 1.4e-116 | 0.0004 |
 | Sleep problems | 32 | 15 | 12 | 1.0e-32 | 0.052 |
 | Increased mucus | 19 | 8 | 6 | 1.1e-41 | 0.13 |
-| Cavities, teeth problems | 9 | 10 | 2 | 2.3e-09 | 0.20 |
+| Cavities, teeth problems | 9 | 10 | 2 | 2.3e-09 | 0.21 |
 | Smell or taste problems | 13 | 5 | 6 | 8.2e-15 | 0.28 |
 | Anxiety, depression | 24 | 20 | 9 | 0.008 | 0.40 |
 | Lung problems | 15 | 8 | 5 | 7.7e-07 | 0.40 |
 | Headaches | 20 | 12 | 12 | 2.2e-20 | 0.48 |
 | Eating more or less | 31 | 20 | 17 | 1.6e-13 | 0.51 |
 
-Numbers are patients with the symptom. Only nausea, diarrhoea and vomiting remains significant (adjusted p = 0.009). The three clusters are gene expression clusters. Apart from this one symptom group, their symptom profiles do not differ significantly.
+Numbers are patients with the symptom. The table shows the nine symptoms with the smallest published or per patient p values. Tests are chi square tests, or Fisher exact tests when an expected count is below 5, with Benjamini Hochberg adjustment over the 22 symptoms. Only nausea, diarrhoea and vomiting remains significant (adjusted p = 0.009). Two of the published test statistics (533.6 and 188.7) are larger than the number of patients, which is not possible for a test on 154 patients. The three clusters are gene expression clusters. Apart from this one symptom group, their symptom profiles do not differ significantly.
 
 **Table 7.** The columns for clusters 1 and 2 show the two cluster solution (76 and 78 patients) and not the three cluster solution used in the text (65 and 53 patients), and five values in the column for cluster 3 do not match the output. [`SM/SM8/Symptoms_Frequency.tsv`](SM/SM8/Symptoms_Frequency.tsv) also holds the two cluster solution.
 
-**Corrected material.** The tests for all 22 symptoms and the corrected table for the three cluster solution will be added to `SM/SM8`.
+**Corrected material.** [`SM/SM8/Symptom_Tests_Per_Patient.tsv`](SM/SM8/Symptom_Tests_Per_Patient.tsv) has the tests for all 22 symptoms, and [`SM/SM8/Symptoms_Frequency_3_Clusters.tsv`](SM/SM8/Symptoms_Frequency_3_Clusters.tsv) has the counts and percentages for the three cluster solution. Both files hold counts per cluster only.

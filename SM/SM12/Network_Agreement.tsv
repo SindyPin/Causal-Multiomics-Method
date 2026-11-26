@@ -1,0 +1,10 @@
+measure	value	genes
+Genes in both networks	3027	
+Spearman correlation, number of connections (K)	0.477	3027
+Spearman correlation, incoming connections (Kin)	0.388	3027
+Spearman correlation, outgoing connections (Kout)	0.315	3027
+Spearman correlation, control theory score, all shared genes	0.159	3027
+Spearman correlation, control theory score, genes with a score above zero in both networks	0.704	423
+Top 16 genes shared	4	SRC, TP53, MAPK1, CSNK2A1
+Top 100 genes shared	45	
+Type I critical genes shared	256	Jaccard 0.155

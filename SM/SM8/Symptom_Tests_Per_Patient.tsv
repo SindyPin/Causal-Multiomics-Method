@@ -1,0 +1,23 @@
+Symptom	Cluster_1	Cluster_2	Cluster_3	Test	P_per_patient	Adjusted_P_per_patient	Published_P	Published_adjusted_P
+Nausea_Diarrhea_Vomiting	9	4	14	Chi square	0.0004053	0.008916	1.37e-116	3.02e-115
+Sleep_Problems	32	15	12	Chi square	0.05225	0.5747	9.98e-33	5.49e-32
+Increased_Mucus	19	8	6	Chi square	0.1289	0.8384	1.07e-41	1.18e-40
+Cavities_Teeth_Problems	9	10	2	Fisher exact	0.212	0.8384	2.32e-09	4.65e-09
+Smell_Taste_Problems	13	5	6	Chi square	0.2837	0.8384	8.23e-15	2.59e-14
+Muscle_Pain	29	17	16	Chi square	0.3245	0.8384	5.66e-07	1.04e-06
+Need_Supplemental_O2	9	3	3	Fisher exact	0.3453	0.8384	2.68e-12	6.56e-12
+Sore_Throat	4	2	4	Fisher exact	0.3675	0.8384	3.62e-24	1.59e-23
+Anxiety_Depression	24	20	9	Chi square	0.3958	0.8384	0.00818	0.0106
+Lung_Problems	15	8	5	Chi square	0.4	0.8384	7.69e-07	1.21e-06
+Headaches	20	12	12	Chi square	0.4802	0.8384	2.19e-20	8.02e-20
+Weakness_Or_Fatigue	34	22	17	Chi square	0.5051	0.8384	6.45e-07	1.09e-06
+Eating_More_Less	31	20	17	Chi square	0.5084	0.8384	1.56e-13	4.29e-13
+Joint_Pain	26	19	17	Chi square	0.561	0.8384	0.225	0.247
+Skin_Rash	13	7	6	Chi square	0.6183	0.8384	1.53e-11	3.37e-11
+Memory_Thought_Problems	31	21	17	Chi square	0.6441	0.8384	0.595	0.595
+Chest_Pain_Cardiac_Issues	17	11	10	Chi square	0.7043	0.8384	0.000608	0.00087
+Shortness_Of_Breath	22	15	13	Chi square	0.7069	0.8384	0.0434	0.0503
+Liver_Issues	2	1	2	Fisher exact	0.7241	0.8384	0.364	0.382
+Pneumonia	4	3	1	Fisher exact	0.811	0.8921	0.000633	0.00087
+Toe_Problems	10	7	5	Chi square	0.9422	0.9851	4.58e-33	3.36e-32
+Hair_Loss	18	14	10	Chi square	0.9851	0.9851	0.0125	0.0152
