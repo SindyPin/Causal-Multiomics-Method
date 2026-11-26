@@ -162,6 +162,8 @@ The complete code implementation and all corresponding outputs are available in 
 
 You can dynamically explore shifts in gene rankings using our interactive tool available at [Dynamic Causal Genes Visualization in a Long-COVID Network](https://sindypin.shinyapps.io/github/). This tool allows users to adjust the parameter `alpha`, enabling a detailed examination of how genes transition from being network-critical (`alpha = 0`) to focusing more on disease risk or prevention (`alpha = 1`).
 
+Since November 2026 the tool has two more tabs. **General CT genes** lists the control theory results for the human PPI network (structure only, 6,327 proteins). **Long COVID CT genes by threshold** lists the results when an interaction is kept only if the two genes are correlated across patients (absolute Spearman r from 0 to 0.6), for the Long COVID and the recovered group. Both tabs offer the tables as CSV files. The lists by threshold are candidates for follow up and are not shown to be specific to Long COVID (see [SM13](SM/SM13/README.md)).
+
 By adjusting \(\alpha\), you can customize insights into gene roles based on their specific research objectives, whether those objectives involve network dynamics, genetic risk factors, or a combination of both.
 
 ![Causal Score Equation](Figures/App.png)
