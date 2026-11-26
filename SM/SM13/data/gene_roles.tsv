@@ -1,0 +1,26 @@
+gene	known_role
+LCK	Tyrosine kinase that starts T cell receptor signalling
+LYN	Src family kinase in B cell and myeloid cell signalling
+HCK	Src family kinase of myeloid cells (monocytes, neutrophils)
+SYK	Tyrosine kinase downstream of B cell and Fc receptors
+STAT3	Transcription factor activated by cytokines through JAK kinases
+JAK2	Kinase downstream of cytokine receptors (JAK STAT pathway)
+GSK3B	Serine threonine kinase in WNT and insulin signalling
+SP1	General transcription factor
+PIK3R1	Regulatory subunit of PI3 kinase
+SHC1	Adaptor that links receptors to RAS MAPK signalling
+ATXN1	Ataxin 1, a transcriptional regulator
+TRAF2	Adaptor in TNF receptor and NF kappa B signalling
+RAC1	Small GTPase that controls the cytoskeleton and cell movement
+PLCG1	Phospholipase C gamma 1, downstream of T cell and growth factor receptors
+RAF1	Kinase of the RAS MAPK cascade
+PTK2B	PYK2 tyrosine kinase, calcium dependent signalling in immune cells
+CBL	E3 ubiquitin ligase that switches off tyrosine kinase signalling
+JUN	Transcription factor, part of the AP1 complex
+YWHAZ	14 3 3 zeta adaptor protein
+MAPK3	ERK1 kinase of the MAPK cascade
+VIM	Vimentin, intermediate filament protein
+RXRA	Retinoid X receptor alpha, nuclear receptor
+PRKCD	Protein kinase C delta
+NCOA1	Nuclear receptor coactivator 1
+PCNA	DNA replication clamp

@@ -1,3 +1,5 @@
+> **Note, November 2026.** The Spearman correlation of 0.61 reported below is not supported by the stored outputs, and the agreement between the two networks is weaker than described here. See item 3 of [`CORRECTIONS.md`](../../CORRECTIONS.md).
+
 # PPI Network Sensitivity Analysis
 
 This repository contains comprehensive sensitivity analysis results comparing Control Theory (CT) scores across different Protein-Protein Interaction (PPI) networks for Long COVID causal gene discovery.

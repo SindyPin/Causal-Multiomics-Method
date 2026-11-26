@@ -1,3 +1,5 @@
+> **Note, November 2026.** The symptom tests of the article counted clinical rows and not patients, and `Symptoms_Frequency.tsv` holds the two cluster solution. The corrected files are `Symptom_Tests_Per_Patient.tsv`, `Symptoms_Frequency_3_Clusters.tsv` and `Table7_Corrected.tsv`. The file with one cluster per participant was removed. See item 4 of [`CORRECTIONS.md`](../../CORRECTIONS.md).
+
 # Gene Expression Clustering Analysis for Long COVID Subtypes
 
 This directory contains data, results, and figures from gene expression clustering analysis in Long COVID patients. The analysis stratifies patients into subgroups using gene expression data from 32 identified causal genes we found from our framework, revealing distinct symptom profiles and biological pathways associated with each cluster.

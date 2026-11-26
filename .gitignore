@@ -1,0 +1,17 @@
+# Data that must stay on the local computer (controlled access or large)
+data_local/
+*clinical_data*
+*checklist_labels*
+*_normalised_matrix.csv
+expression_*.tsv
+# Licensed software that must not be distributed
+ControllabilityAnalysis*/
+# LaTeX and R build files
+*.aux
+*.log
+*.fls
+*.fdb_latexmk
+*.out
+*.synctex.gz
+.Rhistory
+.DS_Store
