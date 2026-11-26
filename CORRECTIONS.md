@@ -10,6 +10,7 @@ After publication we audited the code and the stored outputs against the article
 | 2 | Weights of Type I and Type II critical genes | None. Text only |
 | 3 | Agreement between the two PPI networks | The reported value changes |
 | 4 | Symptom differences between the clusters, and Table 7 | The result changes |
+| 5 | Other statements about the data and the clustering | None or small. Text only |
 
 ## 1. The control theory step used the network structure only
 
@@ -61,6 +62,22 @@ No stored output gives 0.61. Most genes have a score of zero in one of the two n
 
 Numbers are patients with the symptom. The table shows the nine symptoms with the smallest published or per patient p values. Tests are chi square tests, or Fisher exact tests when an expected count is below 5, with Benjamini Hochberg adjustment over the 22 symptoms. Only nausea, diarrhoea and vomiting remains significant (adjusted p = 0.009). Two of the published test statistics (533.6 and 188.7) are larger than the number of patients, which is not possible for a test on 154 patients. The three clusters are gene expression clusters. Apart from this one symptom group, their symptom profiles do not differ significantly.
 
-**Table 7.** The columns for clusters 1 and 2 show the two cluster solution (76 and 78 patients) and not the three cluster solution used in the text (65 and 53 patients), and five values in the column for cluster 3 do not match the output. [`SM/SM8/Symptoms_Frequency.tsv`](SM/SM8/Symptoms_Frequency.tsv) also holds the two cluster solution.
+**Table 7.** The sections for clusters 1 and 2 show the two cluster solution (76 and 78 patients) and not the three cluster solution used in the text (65 and 53 patients). In the section for cluster 3, five values do not match the stored output: weakness or fatigue (15, output 17), memory or thought problems (12, output 17), muscle pain (12, output 16), shortness of breath (9, output 13) and chest pain or cardiac issues (8, output 10). [`SM/SM8/Symptoms_Frequency.tsv`](SM/SM8/Symptoms_Frequency.tsv) also holds the two cluster solution. The corrected table is in [`SM/SM8/Table7_Corrected.tsv`](SM/SM8/Table7_Corrected.tsv).
 
 **Corrected material.** [`SM/SM8/Symptom_Tests_Per_Patient.tsv`](SM/SM8/Symptom_Tests_Per_Patient.tsv) has the tests for all 22 symptoms, and [`SM/SM8/Symptoms_Frequency_3_Clusters.tsv`](SM/SM8/Symptoms_Frequency_3_Clusters.tsv) has the counts and percentages for the three cluster solution. Both files hold counts per cluster only.
+
+## 5. Other statements about the data and the clustering
+
+| Statement in the article | What the files show |
+|---|---|
+| 413 blood samples from 158 individuals with Long COVID | 412 sample columns from 158 individuals, of which 366 hold expression values. The clustering used 154 individuals |
+| Clustering of 32 genes | 31 genes. ITPRID1 is not in the expression matrix that was clustered ([`SM/SM8/Cluster_Mean_Expression.tsv`](SM/SM8/Cluster_Mean_Expression.tsv)) |
+| The number of clusters was chosen by the highest average silhouette width and a balanced distribution | Two clusters have the highest width (0.99, with 76 and 78 patients). Three clusters have 0.87. The solutions use different distance measures, so their widths are not directly comparable ([`SM/SM8/Best_Configurations.tsv`](SM/SM8/Best_Configurations.tsv)) |
+| Fixed seed of 5 for the clustering | The script uses seed 1 |
+| Age, sex and smoking status evenly distributed between clusters (all p > 0.1) | The stored tests cover sex (p = 0.91) and smoking status (p = 0.49). No test for age is in the stored output |
+| Leave one out diagnostics were implemented for the Mendelian randomisation | No leave one out analysis is in the public notebooks |
+
+## Participant data
+
+The file `SM/SM8/Cluster_Assignments.tsv`, which listed one cluster per participant, was removed from the repository in November 2026. The clinical data of GSE215865 are under controlled access and must be requested from Synapse.
+

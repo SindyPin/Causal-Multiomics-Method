@@ -27,6 +27,7 @@ The genes that enter the top 16 are therefore candidates for further study. They
 | File | Content |
 |---|---|
 | `SM13_Control_Theory_Gene_Expression.tex`, `.pdf` | The supplementary document |
+| `validation.md` | Check of the R function against the reference software and against a published result |
 | `figures/` | Figures 1 to 4 (PDF and PNG) |
 | `tables/threshold_summary.tsv` | Network size, driver nodes and classes per group and threshold |
 | `tables/top16_by_threshold_LongCOVID.tsv`, `tables/top16_by_threshold_recovered.tsv` | The 16 top genes per threshold |

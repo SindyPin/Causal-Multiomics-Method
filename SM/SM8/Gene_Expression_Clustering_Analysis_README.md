@@ -1,4 +1,4 @@
-> **Note, November 2026.** The symptom tests of the article counted clinical rows and not patients, and `Symptoms_Frequency.tsv` holds the two cluster solution. The corrected files are `Symptom_Tests_Per_Patient.tsv` and `Symptoms_Frequency_3_Clusters.tsv`. See item 4 of [`CORRECTIONS.md`](../../CORRECTIONS.md).
+> **Note, November 2026.** The symptom tests of the article counted clinical rows and not patients, and `Symptoms_Frequency.tsv` holds the two cluster solution. The corrected files are `Symptom_Tests_Per_Patient.tsv`, `Symptoms_Frequency_3_Clusters.tsv` and `Table7_Corrected.tsv`. The file with one cluster per participant was removed. See item 4 of [`CORRECTIONS.md`](../../CORRECTIONS.md).
 
 # Gene Expression Clustering Analysis for Long COVID Subtypes
 
