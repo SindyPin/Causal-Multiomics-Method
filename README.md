@@ -37,7 +37,7 @@ This framework combines advanced techniques (Mendelian Randomization: Mt_Robin (
    - **Number of Tissues Threshold**: SNPs showing significant effects in at least one tissue are retained.
    - **P-value Threshold 2**: Genes with a p-value and False Discovery Rate (FDR) less than or equal to 0.05 are retained.
 
-3. **Long-COVID Network**: The framework evaluates the roles of these genes within the human protein-coding gene network, focusing on their degree (K), in-degree (Kin), and out-degree (Kout). The genes are classified into specific categories based on their indispensability and criticality in network control:
+3. **Network analysis (control theory)**: The framework evaluates the roles of these genes within the general human protein interaction (PPI) network of Vinayagam et al. This step uses the structure of the network; gene expression values do not enter it (the analysis with gene expression is in [SM13](SM/SM13)). The framework evaluates the roles of these genes within the human protein-coding gene network, focusing on their degree (K), in-degree (Kin), and out-degree (Kout). The genes are classified into specific categories based on their indispensability and criticality in network control:
    - **Indispensable and Critical Genes**: The analysis highlights genes that are crucial for network control, subdividing them into:
      - **Type I Critical Genes**: Genes whose removal increases the number of driver nodes (N_D), indicating their essential role in maintaining control within the network.
      - **Type II Critical Genes**: Genes that must always be controlled, belonging to all driver node sets, and characterized by zero in-degree (Kin=0).
@@ -65,7 +65,7 @@ The integrated framework filters and ranks genes based on their contributions to
 ### Definitions
 
 **Indispensable Genes**:  
-These are protein-coding genes crucial for maintaining the controllability of the Long-COVID network. If removed, they increase the number of driver nodes (\(ND\)) required to control the network. Indispensable genes are further classified into two categories, Type-I and Type-II, which reflect their different roles and impact across various network states.
+These are protein-coding genes crucial for maintaining the controllability of the human PPI network. If removed, they increase the number of driver nodes (\(ND\)) required to control the network. Indispensable genes are further classified into two categories, Type-I and Type-II, which reflect their different roles and impact across various network states.
 
 **Type-I Genes**:  
 These genes are defined by their direct effect on the controllability of the network, as measured by their influence on the number of driver nodes (\(ND\)):
@@ -82,13 +82,31 @@ These genes are classified based on their participation in driver node sets, whi
 **Driver Nodes (\(ND\))**:  
 Driver nodes are key nodes in the network that must be controlled to ensure the network's overall functionality. An increase in the number of driver nodes suggests a greater level of complexity or difficulty in controlling the network, while a decrease indicates a reduction in the effort required for control.
 
+## Update, November 2026: control theory with gene expression
+
+The network driver genes of the article were obtained from the structure of the general human PPI network. They are highly connected proteins of that network and they are not specific to Long COVID. We have added the analysis in which gene expression is used:
+
+- **[`SM/SM13`](SM/SM13)**: control theory analysis at several correlation thresholds, with the core genes that remain at every threshold, the genes that change with the threshold, and the controls that indicate how to read them ([PDF](SM/SM13/SM13_Control_Theory_Gene_Expression.pdf)).
+- **`Code/control_theory.R`**: R function `run_control_theory()` for the whole step (correlation per interaction, threshold, structural controllability, Type I and Type II classes, score). It is an independent implementation of the published definitions and needs only the R package igraph. For the networks of SM13 it gives the same result as ControllabilityAnalysis v1.0 for every protein.
+- **`Code/test_control_theory.R`**: tests of the function.
+- **`Code/ControlTheory_expression.R`**: script that produces every table and figure of SM13.
+
+```r
+source("Code/control_theory.R")
+res <- run_control_theory(edges, expr = expression_matrix, keep = 0.5)   # keep = 0.5: threshold at the median of |r|
+res$summary      # nodes, edges, driver nodes, class counts
+res$nodes        # one row per gene: K, Type I, Type II, score
+res$driver_set   # one minimum driver node set
+```
+
 ## Files in This Repository
 
 - **`Code/`:** Contains the main code files:
   - **`Main_Code.md`:** A markdown file describing the overall code structure and functionalities.
   - **`generate_report_function.R`:** The primary R script containing the function to calculate Final Scores, rank genes, and generate a summary report.
+  - **`control_theory.R`**, **`test_control_theory.R`**, **`ControlTheory_expression.R`:** The control theory step with gene expression (see the update above).
 - **`Figures/`:** Directory containing visual assets such as workflow diagrams, causal score equations, and app screenshots used in the documentation.
-- **`SM/`:** Supplementary Materials folder containing 9 subfolders with additional data, scripts, and resources related to the project.
+- **`SM/`:** Supplementary Materials folder containing 13 subfolders with additional data, scripts, and resources related to the project.
 
 ## System Requirements
 

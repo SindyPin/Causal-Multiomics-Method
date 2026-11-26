@@ -1,0 +1,8 @@
+test	threshold	observed	shuffled_mean	shuffled_p2.5	shuffled_p97.5	shuffles
+Genes whose Type I critical role differs	0.3	469	473.5	434	517	200
+Genes whose Type I critical role differs	0.5	338	332.0	295	379	200
+Genes with p <= 0.05 for the score difference	0.3	79	91.0	56	141	200
+Genes with p <= 0.05 for the score difference	0.5	99	88.3	48	170	200
+Interactions with p <= 0.05 for the correlation difference	none	1291	1259.0	748	2281	1000
+Interactions with p <= 0.01 for the correlation difference	none	268	252.0	109	585	1000
+Genes with p <= 0.05 for the mean squared correlation difference	none	243	238.0	97	594	1000

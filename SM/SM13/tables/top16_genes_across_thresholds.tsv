@@ -1,0 +1,34 @@
+gene	category	thresholds_in_top	in_top_at	rank_t0	rank_t0.1	rank_t0.2	rank_t0.3	rank_t0.4	rank_t0.5	rank_t0.6	K_t0	K_t0.1	K_t0.2	K_t0.3	K_t0.4	K_t0.5	K_t0.6	known_role
+TP53	core	7	0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6	1	1	1	1	1	1	1	272	233	199	166	133	104	47	
+EP300	core	7	0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6	2	2	2	2	2	2	2	233	197	165	131	101	73	46	
+CREBBP	core	7	0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6	3	3	3	3	3	3	4	231	191	155	124	97	70	44	
+GRB2	core	7	0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6	6	4	4	4	4	5	3	186	165	135	111	83	64	45	
+MAPK1	core	7	0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6	12	8	7	6	5	4	8	140	122	107	91	81	66	41	
+FYN	core	7	0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6	13	10	8	7	6	6	5	138	119	103	89	71	62	43	
+SMAD3	published	5	0, 0.1, 0.2, 0.3, 0.4	5	5	5	5	8	27	39	194	163	120	93	62	28	13	
+ESR1	published	5	0, 0.1, 0.2, 0.3, 0.4	9	7	6	9	15	81	786	157	137	107	71	44	13	3	
+SMAD2	published	4	0, 0.1, 0.2, 0.3	14	13	11	14	60	1769	1169	136	112	88	60	25	12	2	
+YWHAG	published	3	0, 0.1, 0.2	4	6	10	32	110	1965	1288	219	154	89	49	16	4	1	
+CSNK2A1	published	3	0, 0.1, 0.2	11	12	12	20	53	1109	731	146	114	84	53	27	6	1	
+SRC	published	2	0, 0.1	7	11	22	77	108	253		168	117	68	33	16	4		
+RB1	published	2	0, 0.1	10	9	20	65	235	805		156	122	71	36	8	1		
+AR	published	1	0	8	32	217					159	79	19					
+CDKN1A	published	1	0	15	42	160	1733	1400			129	74	25	5	1			
+HDAC1	published	1	0	16	18	24	40	48	1272		129	95	66	45	28	6		
+GSK3B	new	6	0.1, 0.2, 0.3, 0.4, 0.5, 0.6	24	15	13	10	10	9	11	114	100	84	71	55	40	29	Serine threonine kinase in WNT and insulin signalling
+LCK	new	6	0.1, 0.2, 0.3, 0.4, 0.5, 0.6	34	16	9	8	7	7	6	103	97	90	79	68	58	43	Tyrosine kinase that starts T cell receptor signalling
+SP1	new	5	0.2, 0.3, 0.4, 0.5, 0.6	29	19	16	12	11	11	15	109	90	78	63	53	38	26	General transcription factor
+LYN	new	4	0.3, 0.4, 0.5, 0.6	45	23	18	11	9	8	7	94	86	74	67	59	51	43	Src family kinase in B cell and myeloid cell signalling
+PIK3R1	new	3	0.1, 0.2, 0.3	18	14	14	13	39	60	63	128	108	81	60	32	17	8	Regulatory subunit of PI3 kinase
+ATXN1	new	3	0.3, 0.4, 0.5	38	27	23	15	12	16	37	100	82	67	56	47	34	14	Ataxin 1, a transcriptional regulator
+STAT3	new	3	0.4, 0.5, 0.6	47	36	28	27	13	10	10	92	76	63	51	45	40	30	Transcription factor activated by cytokines through JAK kinases
+SYK	new	3	0.4, 0.5, 0.6	76	61	40	37	14	15	13	72	65	59	48	45	35	27	Tyrosine kinase downstream of B cell and Fc receptors
+HCK	new	2	0.5, 0.6	78	60	53	47	19	12	9	71	65	54	43	40	35	31	Src family kinase of myeloid cells (monocytes, neutrophils)
+SHC1	new	1	0.2	20	17	15	19	35	108	1156	124	97	79	54	34	11	4	Adaptor that links receptors to RAS MAPK signalling
+TRAF2	new	1	0.3	30	20	17	16	18	52	116	108	89	76	56	41	19	9	Adaptor in TNF receptor and NF kappa B signalling
+RAC1	new	1	0.4	54	43	26	21	16	26	25	85	74	65	53	44	28	18	Small GTPase that controls the cytoskeleton and cell movement
+JAK2	new	1	0.5	66	55	33	29	1823	13	18	77	67	60	50	43	35	22	Kinase downstream of cytokine receptors (JAK STAT pathway)
+PLCG1	new	1	0.5	3502	40	30	18	2181	14	17	87	75	61	54	42	35	23	Phospholipase C gamma 1, downstream of T cell and growth factor receptors
+CBL	new	1	0.6	63	59	44	38	17	17	16	77	65	57	46	41	34	24	E3 ubiquitin ligase that switches off tyrosine kinase signalling
+RAF1	new	1	0.6	70	53	45	42	28	21	12	75	68	57	45	36	32	27	Kinase of the RAS MAPK cascade
+PTK2B	new	1	0.6	108	3553	61	41	23	20	14	62	55	49	45	39	32	26	PYK2 tyrosine kinase, calcium dependent signalling in immune cells
