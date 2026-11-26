@@ -84,6 +84,8 @@ Driver nodes are key nodes in the network that must be controlled to ensure the 
 
 ## Update, November 2026: control theory with gene expression
 
+A list of the statements of the article that need a correction is in [`CORRECTIONS.md`](CORRECTIONS.md).
+
 The network driver genes of the article were obtained from the structure of the general human PPI network. They are highly connected proteins of that network and they are not specific to Long COVID. We have added the analysis in which gene expression is used:
 
 - **[`SM/SM13`](SM/SM13)**: control theory analysis at several correlation thresholds, with the core genes that remain at every threshold, the genes that change with the threshold, and the controls that indicate how to read them ([PDF](SM/SM13/SM13_Control_Theory_Gene_Expression.pdf)).

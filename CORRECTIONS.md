@@ -1,0 +1,65 @@
+# Notes and corrections to the published article
+
+Article: Pinero S, et al. Integrative multi-omics framework for causal gene discovery in Long COVID. PLOS Computational Biology 2025;21(12):e1013725. doi:[10.1371/journal.pcbi.1013725](https://doi.org/10.1371/journal.pcbi.1013725)
+
+After publication we audited the code and the stored outputs against the article. This file lists the statements that need a correction, what the files show, and where the corrected material is. Last update: November 2026.
+
+| # | Topic | Effect on the results |
+|---|---|---|
+| 1 | Control theory step: network structure only | Gene list unchanged. Interpretation changes |
+| 2 | Weights of Type I and Type II critical genes | None. Text only |
+| 3 | Agreement between the two PPI networks | The reported value changes |
+| 4 | Symptom differences between the clusters, and Table 7 | The result changes |
+
+## 1. The control theory step used the network structure only
+
+**In the article.** The PPI network is described as placed "within the specific context of Long COVID", and the 16 network driver genes are described as genes of a Long COVID network.
+
+**What the files show.** The gene expression file was used to list the genes that were measured. The expression values did not enter the network. The network analysed (6,327 proteins, 34,620 interactions) is the general human PPI network of Vinayagam et al., and the 16 genes are its 16 most connected proteins. They are not specific to Long COVID.
+
+**Corrected material.** [`SM/SM13`](SM/SM13) adds the analysis with gene expression at seven correlation thresholds. Six genes remain in the top 16 at every threshold (TP53, EP300, CREBBP, GRB2, MAPK1, FYN). The comparison with recovered patients shows no difference beyond chance.
+
+## 2. Weights of Type I and Type II critical genes
+
+**In the article (main text).** Type I critical genes receive a weight of 1 and Type II critical genes a weight of 2.
+
+**What the files show.** The code gives a weight of 2 to Type I critical genes and a weight of 1 to Type II critical genes, as in the supplementary methods (Eq 7) and in [`SM/SM11/fusion_scores.csv`](SM/SM11/fusion_scores.csv). The supplementary methods and the results are correct. The main text has the two weights reversed.
+
+## 3. Agreement between the Vinayagam network and OmniPath
+
+**In the article.** The controllability scores of the two networks are reported to agree with a Spearman correlation of 0.61, described as moderate to strong agreement.
+
+**What the files show.** Across the 3,027 genes present in both networks:
+
+| Measure | Value |
+|---|---:|
+| Spearman correlation of the number of connections (K) | 0.48 |
+| Spearman correlation of the control theory score | 0.16 |
+| Top 16 genes shared by the two networks | 4 of 16 |
+| Critical genes shared (Jaccard index) | 0.14 |
+
+No stored output gives 0.61. The agreement between the two networks is weak to moderate, and the statement that the comparison validates the robustness of the network results is not supported. The description in [`SM/SM12/PPIs.md`](SM/SM12/PPIs.md) has the same limitation.
+
+## 4. Symptom differences between the clusters, and Table 7
+
+**In the article.** Symptoms were compared between the three gene expression clusters, and most symptoms are reported as significantly different. The clusters are described as distinct symptom based subtypes.
+
+**What the files show.** The tests were run on the rows of the clinical table, which has several rows per patient, and not on the 154 patients. Each patient was therefore counted several times, which made the p values far too small. When each patient is counted once (clusters of 65, 53 and 36 patients), one of the 22 symptoms differs between the clusters after correction for multiple testing:
+
+| Symptom | Cluster 1 | Cluster 2 | Cluster 3 | Published p | p per patient |
+|---|---:|---:|---:|---:|---:|
+| Nausea, diarrhoea, vomiting | 9 | 4 | 14 | 1.4e-116 | 0.0004 |
+| Sleep problems | 32 | 15 | 12 | 1.0e-32 | 0.052 |
+| Increased mucus | 19 | 8 | 6 | 1.1e-41 | 0.13 |
+| Cavities, teeth problems | 9 | 10 | 2 | 2.3e-09 | 0.20 |
+| Smell or taste problems | 13 | 5 | 6 | 8.2e-15 | 0.28 |
+| Anxiety, depression | 24 | 20 | 9 | 0.008 | 0.40 |
+| Lung problems | 15 | 8 | 5 | 7.7e-07 | 0.40 |
+| Headaches | 20 | 12 | 12 | 2.2e-20 | 0.48 |
+| Eating more or less | 31 | 20 | 17 | 1.6e-13 | 0.51 |
+
+Numbers are patients with the symptom. Only nausea, diarrhoea and vomiting remains significant (adjusted p = 0.009). The three clusters are gene expression clusters. Apart from this one symptom group, their symptom profiles do not differ significantly.
+
+**Table 7.** The columns for clusters 1 and 2 show the two cluster solution (76 and 78 patients) and not the three cluster solution used in the text (65 and 53 patients), and five values in the column for cluster 3 do not match the output. [`SM/SM8/Symptoms_Frequency.tsv`](SM/SM8/Symptoms_Frequency.tsv) also holds the two cluster solution.
+
+**Corrected material.** The tests for all 22 symptoms and the corrected table for the three cluster solution will be added to `SM/SM8`.
